@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/hero.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/ground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/stairs.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GDScript/main.gd" type="Script" id=4]
+[ext_resource path="res://GDScript/element0.gd" type="Script" id=5]
 
 [node name="main" type="Node2D"]
 script = ExtResource( 4 )
@@ -52,3 +53,14 @@ scale = Vector2( 0.946, 2.464 )
 position = Vector2( 88, 560 )
 rotation = 0.69115
 scale = Vector2( 0.946, 1.976 )
+
+[node name="element0" type="ColorRect" parent="."]
+margin_left = 60.0
+margin_top = 589.449
+margin_right = 115.0
+margin_bottom = 644.449
+color = Color( 0.956863, 0.45098, 0.00784314, 1 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

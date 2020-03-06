@@ -80,6 +80,13 @@ ui_switch={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="terrain"
+2d_physics/layer_2="fire"
+2d_physics/layer_3="gas"
+2d_physics/layer_20="hero"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
