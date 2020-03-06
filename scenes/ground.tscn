@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 240.768, 32 )
+
+[node name="StaticBody2D" type="StaticBody2D"]
+position = Vector2( 232, 416 )
+collision_layer = 1023
+collision_mask = 1023
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 8.0997, 36.6603 )
+scale = Vector2( 1, 0.9 )
+shape = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2( -232, 8 )
+scale = Vector2( 0.46875, 1.05089 )
+color = Color( 0.4, 0.227451, 0.0745098, 1 )
+polygon = PoolVector2Array( 0, 0, 1024, 0, 1024, 56, 0, 56 )
