@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://elemental.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 2.31746, 2.36056 )
+
+[node name="elemental" type="RigidBody2D"]
+position = Vector2( 74.1817, 30.4466 )
+z_index = 1
+z_as_relative = false
+collision_layer = 2
+gravity_scale = 0.0
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 7.62939e-06, 1.19164 )
+shape = SubResource( 1 )
