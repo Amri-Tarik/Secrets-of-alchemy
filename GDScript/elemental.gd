@@ -156,4 +156,4 @@ func _integrate_forces(_state):
 	if no_forces == 0 :
 		add_central_force(CENTRAL)
 		apply_central_impulse(IMPULSE)
-		set_inertia(1000)
+		set_inertia(1000000)

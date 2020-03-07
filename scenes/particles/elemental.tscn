@@ -9,7 +9,7 @@ extents = Vector2( 2.67951, 2.805 )
 z_index = 1
 z_as_relative = false
 collision_layer = 0
-collision_mask = 7
+collision_mask = 31
 gravity_scale = 0.0
 script = ExtResource( 1 )
 
