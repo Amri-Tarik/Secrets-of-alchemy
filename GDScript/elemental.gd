@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+var steam_grad = preload("res://scenes/particles/steam.tres")
+
 export var aoe_length = 10
 var CENTRAL = Vector2()
 var IMPULSE = Vector2()
@@ -8,8 +10,10 @@ var mouse_pos
 var pos_burst_r
 var pos_burst_l
 
+
 var aura_shape = 0
 var no_forces = 0
+var steam = 0
 
 signal ignition
 
@@ -23,13 +27,14 @@ func _ready():
 	timer = Timer.new()
 	self.add_child(timer)
 	timer.set_one_shot(true)
-	timer.set_wait_time(5)
+	timer.set_wait_time(7)
 	randomize()
 	timer.start()
 	yield(timer,"timeout")
-	if aura_shape :
-		timer.start()
-		yield(timer,"timeout")
+#	if aura_shape :
+#		timer.set_wait_time(2)
+#		timer.start()
+#		yield(timer,"timeout")
 	timer.queue_free()
 	self.queue_free()
 
@@ -51,11 +56,7 @@ func deferred_burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_
 	self.add_child(elemental)
 	self.set_collision_layer_bit(layer_bit,true)
 	self.set_collision_mask_bit(layer_bit,false)
-	if layer_bit == 1 :
-		set_contact_monitor(true)
-		set_max_contacts_reported(1)
-# warning-ignore:return_value_discarded
-		connect("body_entered",self,"ignite")
+	interaction(layer_bit)
 	if layer_bit == 2 :
 		pos_modifier_x = rand_range(20,120)
 		pos_modifier_y = rand_range(10,60)
@@ -81,11 +82,7 @@ func deferred_aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,
 	self.add_child(elemental)
 	self.set_collision_layer_bit(layer_bit,true)
 	self.set_collision_mask_bit(layer_bit,false)
-	if layer_bit == 1 :
-		set_contact_monitor(true)
-		set_max_contacts_reported(1)
-# warning-ignore:return_value_discarded
-		connect("body_entered",self,"ignite")
+	interaction(layer_bit)
 	translate(Vector2(mouse_pos.x + aoe_length*k - 12.5*aoe_length , ground[k].y -30 -40*fill_height) )
 	CENTRAL = central
 	IMPULSE = Vector2( rand_range(impulse[0],impulse[1]), rand_range(impulse[2],impulse[3]) )
@@ -109,11 +106,7 @@ func deferred_aura(particle,aura_scale,layer_bit):
 	self.set_collision_layer_bit(layer_bit,true)
 	self.set_collision_mask_bit(layer_bit,false)
 	self.set_collision_mask_bit(0,false)
-	if layer_bit == 1 :
-		set_contact_monitor(true)
-		set_max_contacts_reported(1)
-# warning-ignore:return_value_discarded
-		connect("body_entered",self,"ignite")
+	interaction(layer_bit)
 #	translate(spawn_pos)
 	no_forces = 1
 
@@ -122,7 +115,7 @@ func deferred_aura(particle,aura_scale,layer_bit):
 
 
 func ignite(body):
-	if ( body.get_collision_layer_bit(2) ) :
+	if ( body.get_collision_layer_bit(2) && steam == 0 ) :
 		call_deferred("deferred_ignite",body)
 
 func deferred_ignite(body):
@@ -141,13 +134,40 @@ func deferred_burst_from_gas(particle,contact_pos):
 	self.add_child(elemental)
 	self.set_collision_layer_bit(1,true)
 	self.set_collision_mask_bit(1,false)
-	set_contact_monitor(true)
-	set_max_contacts_reported(1)
-# warning-ignore:return_value_discarded
-	connect("body_entered",self,"ignite")
+	interaction(1)
 	translate(contact_pos)
 	IMPULSE = Vector2( rand_range(-3,3), rand_range(-3,3) )
 	CENTRAL = Vector2(0,-5)
+
+
+
+
+func put_out(body):
+	if ( body.get_collision_layer_bit(1) && body.get("steam") == 0) :
+		call_deferred("deferred_put_out",body)
+
+func deferred_put_out(body):
+	body.get_node("hitbox").disabled = true
+	body.set("steam",1)
+	body.get_node("CPUParticles2D").set_color_ramp(steam_grad)
+	if body.get("aura_shape") == 0 :
+		body.apply_central_impulse(Vector2(0,-40))
+
+
+
+
+func interaction(layer_bit):
+	if layer_bit == 1 :
+		set_contact_monitor(true)
+		set_max_contacts_reported(1)
+# warning-ignore:return_value_discarded
+		connect("body_entered",self,"ignite")
+	if layer_bit == 3 :
+		$hitbox.scale = Vector2(3,3)
+		set_contact_monitor(true)
+		set_max_contacts_reported(1)
+# warning-ignore:return_value_discarded
+		connect("body_entered",self,"put_out")
 
 
 
@@ -156,4 +176,4 @@ func _integrate_forces(_state):
 	if no_forces == 0 :
 		add_central_force(CENTRAL)
 		apply_central_impulse(IMPULSE)
-		set_inertia(1000000)
+		set_inertia(10000000000)

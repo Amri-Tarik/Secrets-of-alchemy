@@ -8,12 +8,12 @@ max_value = 6.0
 _data = [ Vector2( 0, 3 ), 0.0, 23.1341, 0, 0, Vector2( 1, 6 ), 22.1455, 0.0, 0, 0 ]
 
 [sub_resource type="Gradient" id=2]
-colors = PoolColorArray( 0.458221, 0.661162, 0.761719, 1, 0.392157, 0.686275, 0.831373, 0.439216 )
+colors = PoolColorArray( 0.458824, 0.662745, 0.760784, 0.6, 0.392157, 0.686275, 0.831373, 0.172549 )
 
 [node name="CPUParticles2D" type="CPUParticles2D"]
 emitting = false
 amount = 25
-lifetime = 10.0
+lifetime = 6.0
 one_shot = true
 speed_scale = 1.5
 emission_shape = 2

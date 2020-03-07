@@ -29,7 +29,6 @@ func aura(atom,particle,aurascale,layer_bit):
 	spinning = 0
 
 func align():
-	if timer.get_time_left() > 8 :
-		for child in get_children():
-			if child != timer :
-				child.global_position = global_position
+	for child in get_children():
+		if child != timer :
+			child.global_position = global_position

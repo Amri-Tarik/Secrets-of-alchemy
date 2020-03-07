@@ -69,6 +69,8 @@ func deferred_aoe():
 			elemental.connect("ignition",self,"ignite")
 			elemental.aoe(mouse_pos,element[i].aoescale,fill_height,element[i].particle,element[i].centralaoe, element[i].impulseaoe,k,ground,element[i].aoe_coef,element[i].layer_bit)
 
+
+
 func ignite(contact_pos):
 	call_deferred("deferred_ignite",contact_pos)
 
