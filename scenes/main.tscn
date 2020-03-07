@@ -71,7 +71,7 @@ margin_left = 60.0
 margin_top = 589.449
 margin_right = 115.0
 margin_bottom = 644.449
-color = Color( 0.956863, 0.45098, 0.00784314, 1 )
+color = Color( 0.12549, 0.545098, 0.94902, 1 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false

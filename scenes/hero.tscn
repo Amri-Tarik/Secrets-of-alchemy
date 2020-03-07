@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://Individual Sprites/adventurer-idle-2-03.png" type="Texture" id=1]
 [ext_resource path="res://Individual Sprites/adventurer-idle-2-02.png" type="Texture" id=2]
@@ -17,7 +17,6 @@
 [ext_resource path="res://Individual Sprites/adventurer-swrd-shte-02.png" type="Texture" id=15]
 [ext_resource path="res://Individual Sprites/adventurer-swrd-shte-00.png" type="Texture" id=16]
 [ext_resource path="res://GDScript/hero.gd" type="Script" id=17]
-[ext_resource path="res://GDScript/AnimatedSprite.gd" type="Script" id=18]
 [ext_resource path="res://Individual Sprites/adventurer-walk-01.png" type="Texture" id=19]
 [ext_resource path="res://Individual Sprites/adventurer-walk-00.png" type="Texture" id=20]
 [ext_resource path="res://Individual Sprites/adventurer-walk-02.png" type="Texture" id=21]
@@ -51,7 +50,7 @@
 [ext_resource path="res://Individual Sprites/adventurer-cast-01.png" type="Texture" id=49]
 [ext_resource path="res://Individual Sprites/adventurer-cast-02.png" type="Texture" id=50]
 [ext_resource path="res://Individual Sprites/adventurer-cast-03.png" type="Texture" id=51]
-[ext_resource path="res://scenes/aura_path.gd" type="Script" id=52]
+[ext_resource path="res://GDScript/aura_path.gd" type="Script" id=52]
 [ext_resource path="res://Individual Sprites/adventurer-items-00.png" type="Texture" id=53]
 [ext_resource path="res://Individual Sprites/adventurer-items-02.png" type="Texture" id=54]
 [ext_resource path="res://Individual Sprites/adventurer-items-01.png" type="Texture" id=55]
@@ -63,51 +62,6 @@ animations = [ {
 "name": "draw",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "idle1",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 48 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 51 ) ],
-"loop": false,
-"name": "aoe_cast",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 1 ) ],
-"loop": true,
-"name": "idle2",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 28 ), ExtResource( 29 ), ExtResource( 31 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ) ],
-"loop": true,
-"name": "run2",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 20 ), ExtResource( 19 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ],
-"loop": true,
-"name": "walk",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 26 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 30 ), ExtResource( 32 ), ExtResource( 33 ) ],
-"loop": true,
-"name": "run",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 42 ), ExtResource( 41 ) ],
-"loop": true,
-"name": "fall",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 53 ), ExtResource( 55 ), ExtResource( 54 ) ],
-"loop": false,
-"name": "aura_cast",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],
-"loop": false,
-"name": "jump",
-"speed": 10.0
-}, {
 "frames": [ ExtResource( 16 ), ExtResource( 11 ), ExtResource( 15 ), ExtResource( 10 ) ],
 "loop": false,
 "name": "sheat",
@@ -117,6 +71,51 @@ animations = [ {
 "loop": false,
 "name": "cast",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],
+"loop": false,
+"name": "jump",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "idle1",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 26 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 30 ), ExtResource( 32 ), ExtResource( 33 ) ],
+"loop": true,
+"name": "run",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "idle2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 53 ), ExtResource( 55 ), ExtResource( 54 ) ],
+"loop": false,
+"name": "aura_cast",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 19 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "walk",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 28 ), ExtResource( 29 ), ExtResource( 31 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ) ],
+"loop": true,
+"name": "run2",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 48 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 51 ) ],
+"loop": false,
+"name": "aoe_cast",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 42 ), ExtResource( 41 ) ],
+"loop": true,
+"name": "fall",
+"speed": 8.0
 } ]
 
 [sub_resource type="Curve2D" id=2]
@@ -142,7 +141,6 @@ frames = SubResource( 1 )
 animation = "aura_cast"
 frame = 2
 playing = true
-script = ExtResource( 18 )
 
 [node name="aura" type="Path2D" parent="."]
 curve = SubResource( 2 )

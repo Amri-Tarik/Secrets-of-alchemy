@@ -8,7 +8,7 @@ var mouse_pos
 var pos_burst_r
 var pos_burst_l
 
-var aura = 0
+var aura_shape = 0
 var no_forces = 0
 
 signal ignition
@@ -27,10 +27,9 @@ func _ready():
 	randomize()
 	timer.start()
 	yield(timer,"timeout")
-	if aura :
+	if aura_shape :
 		timer.start()
 		yield(timer,"timeout")
-		get_parent().queue_free()
 	timer.queue_free()
 	self.queue_free()
 
@@ -101,7 +100,7 @@ func aura(particle,aura_scale,layer_bit):
 	call_deferred("deferred_aura",particle,aura_scale,layer_bit)
 
 func deferred_aura(particle,aura_scale,layer_bit):
-	aura = 1
+	aura_shape = 1
 	var elemental = particle.instance()
 	self.add_child(elemental)
 	elemental.scale = aura_scale

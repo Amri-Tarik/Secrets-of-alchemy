@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://GDScript/gas.gd" type="Script" id=1]
+[ext_resource path="res://GDScript/particle.gd" type="Script" id=1]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 0.443137, 0.964706, 0.14902, 0.396078, 0.878431, 0.94902, 0.027451, 0.258824 )
