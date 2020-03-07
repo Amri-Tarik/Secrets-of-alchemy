@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://Individual Sprites/adventurer-idle-2-03.png" type="Texture" id=1]
 [ext_resource path="res://Individual Sprites/adventurer-idle-2-02.png" type="Texture" id=2]
@@ -51,6 +51,10 @@
 [ext_resource path="res://Individual Sprites/adventurer-cast-01.png" type="Texture" id=49]
 [ext_resource path="res://Individual Sprites/adventurer-cast-02.png" type="Texture" id=50]
 [ext_resource path="res://Individual Sprites/adventurer-cast-03.png" type="Texture" id=51]
+[ext_resource path="res://scenes/aura_path.gd" type="Script" id=52]
+[ext_resource path="res://Individual Sprites/adventurer-items-00.png" type="Texture" id=53]
+[ext_resource path="res://Individual Sprites/adventurer-items-02.png" type="Texture" id=54]
+[ext_resource path="res://Individual Sprites/adventurer-items-01.png" type="Texture" id=55]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -59,25 +63,10 @@ animations = [ {
 "name": "draw",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 43 ), ExtResource( 47 ) ],
-"loop": false,
-"name": "cast",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 16 ), ExtResource( 11 ), ExtResource( 15 ), ExtResource( 10 ) ],
-"loop": false,
-"name": "sheat",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 42 ), ExtResource( 41 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ) ],
 "loop": true,
-"name": "fall",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],
-"loop": false,
-"name": "jump",
-"speed": 10.0
+"name": "idle1",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 48 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 51 ) ],
 "loop": false,
@@ -89,14 +78,9 @@ animations = [ {
 "name": "idle2",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ) ],
+"frames": [ ExtResource( 28 ), ExtResource( 29 ), ExtResource( 31 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ) ],
 "loop": true,
-"name": "idle1",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 26 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 30 ), ExtResource( 32 ), ExtResource( 33 ) ],
-"loop": true,
-"name": "run",
+"name": "run2",
 "speed": 8.0
 }, {
 "frames": [ ExtResource( 20 ), ExtResource( 19 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ],
@@ -104,11 +88,41 @@ animations = [ {
 "name": "walk",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 28 ), ExtResource( 29 ), ExtResource( 31 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ) ],
+"frames": [ ExtResource( 26 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 30 ), ExtResource( 32 ), ExtResource( 33 ) ],
 "loop": true,
-"name": "run2",
+"name": "run",
 "speed": 8.0
+}, {
+"frames": [ ExtResource( 42 ), ExtResource( 41 ) ],
+"loop": true,
+"name": "fall",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 53 ), ExtResource( 55 ), ExtResource( 54 ) ],
+"loop": false,
+"name": "aura_cast",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],
+"loop": false,
+"name": "jump",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 11 ), ExtResource( 15 ), ExtResource( 10 ) ],
+"loop": false,
+"name": "sheat",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 43 ), ExtResource( 47 ) ],
+"loop": false,
+"name": "cast",
+"speed": 10.0
 } ]
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -39.0326, 9.88374, 0, 0, 0, 0, -37.2715, -10.3223, 0, 0, 0, 0, -35.9446, -26.2444, 0, 0, 0, 0, -28.647, -40.1762, 0, 0, 0, 0, -17.3689, -48.1373, 0, 0, 0, 0, -1.96931, -51.0757, 0, 0, 0, 0, 12.4851, -48.1373, 0, 0, 0, 0, 21.773, -44.8202, 0, 0, 0, 0, 28.7542, -36.4454, 0, 0, 0, 0, 32.3877, -26.2444, 0, 0, 0, 0, 35.0414, -12.976, 0, 0, 0, 0, 36.3682, -1.03439, 0, 0, 0, 0, 36.0694, 11.8344, 0, 0, 0, 0, 34.378, 29.483, 0, 0, 0, 0, 32.3877, 44.7417, 0, 0, 0, 0, 25.0901, 56.6832, 0, 0, 0, 0, 15.1388, 62.654, 0, 0, 0, 0, -0.0186157, 67.4294, 0, 0, 0, 0, -15.3786, 61.9906, 0, 0, 0, 0, -26.8407, 54.7499, 0, 0, 0, 0, -33.2909, 43.4148, 0, 0, 0, 0, -38.5983, 29.483, 0, 0, 0, 0, -39.0326, 10.3714 )
+}
 
 [node name="Hero" type="KinematicBody2D"]
 position = Vector2( 150.733, 88.197 )
@@ -125,7 +139,11 @@ polygon = PoolVector2Array( -2.73828, -16.7938, 2.19841, -16.7938, 5.20335, -14.
 position = Vector2( -0.429291, 1.0732 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
-animation = "aoe_cast"
-frame = 3
+animation = "aura_cast"
+frame = 2
 playing = true
 script = ExtResource( 18 )
+
+[node name="aura" type="Path2D" parent="."]
+curve = SubResource( 2 )
+script = ExtResource( 52 )

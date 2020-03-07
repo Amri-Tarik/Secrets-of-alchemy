@@ -2,8 +2,8 @@ extends Node2D
 
 const atom = preload("res://scenes/elemental.tscn")
 
-var flame = { "particle" : preload("res://scenes/spark.tscn"),"burstscale" : Vector2(1.5,1.5),"aoescale" : Vector2(2.5,2.5), "centralburst" : Vector2(-1.5,-5),"impulseburst" : [4,8,0,-2],"centralaoe" : Vector2(0,0),"impulseaoe" : [-1,1,0,0], "follow_mouse" : 1, "aoe_coef" : 2, "aoe_fill" : 2, "layer_bit" : 1 } 
-var gas = { "particle" : preload("res://scenes/gas.tscn"),"burstscale" : Vector2(3,3), "aoescale" : Vector2(3,3), "centralburst" : Vector2(0,-0.5),"impulseburst" : [-0.5,0.5,-0.5,0.5],"centralaoe" : Vector2(0,-0.3),"impulseaoe" : [-0.8,0.8,0,-0.5], "follow_mouse" : 0, "aoe_coef" : 0, "aoe_fill" : 3, "layer_bit" : 2}
+var flame = { "particle" : preload("res://scenes/spark.tscn"),"burstscale" : Vector2(1.5,1.5),"aoescale" : Vector2(2.5,2.5),"aurascale" : Vector2(2,2), "centralburst" : Vector2(-1.5,-5),"impulseburst" : [4,8,0,-2],"centralaoe" : Vector2(0,0),"impulseaoe" : [-1,1,0,0], "follow_mouse" : 1, "aoe_coef" : 2, "aoe_fill" : 2, "layer_bit" : 1 } 
+var gas = { "particle" : preload("res://scenes/gas.tscn"),"burstscale" : Vector2(3,3), "aoescale" : Vector2(3,3),"aurascale" : Vector2(3,3), "centralburst" : Vector2(0,-0.5),"impulseburst" : [-0.5,0.5,-0.5,0.5],"centralaoe" : Vector2(0,-0.3),"impulseaoe" : [-0.8,0.8,0,-0.5], "follow_mouse" : 0, "aoe_coef" : 0, "aoe_fill" : 3, "layer_bit" : 2}
 
 var element = [flame,gas]
 var i = 0
@@ -12,12 +12,16 @@ var mouse_pos
 export var aoe_length = 10
 
 signal change_element
+signal aura
 
 func _ready():
 # warning-ignore:return_value_discarded
 	$Hero.connect("burst",self,"burst")
 # warning-ignore:return_value_discarded
 	$Hero.connect("aoe",self,"aoe")
+# warning-ignore:return_value_discarded
+	$Hero.connect("aura",self,"aura")
+
 
 func _process(_delta):
 	if(Input.is_action_just_pressed("ui_switch")):
@@ -65,3 +69,9 @@ func deferred_ignite(contact_pos):
 		self.add_child(elemental)
 		elemental.connect("ignition",self,"ignite")
 		elemental.burst_from_gas(flame.particle,contact_pos)
+
+func aura():
+	call_deferred("deferred_aura")
+
+func deferred_aura():
+	emit_signal("aura",atom,element[i].particle,element[i].aurascale,element[i].layer_bit)

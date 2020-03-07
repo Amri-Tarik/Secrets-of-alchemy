@@ -4,12 +4,15 @@ signal draw_s
 signal sheat_s
 signal burst
 signal aoe
+signal aura
+
+
 var idle = 1
 export var SPEED = 400
 var screen_size
 var cast_pos = Vector2()
 var velocity = Vector2()
-var i = {"right" : 0, "left" : 0, "jump" : 0, "sheat" : 0, "cast" : 0, "aoe" : 0}
+var i = {"right" : 0, "left" : 0, "jump" : 0, "sheat" : 0, "cast" : 0, "aoe" : 0,"aura" : 0}
 export var GRAVITY = 10
 export var JUMP_POWER = -300
 var jumping = 0
@@ -47,6 +50,9 @@ func get_input():
 	if (Input.is_action_just_pressed("ui_aoe"))  and cast_timer.get_time_left() == 0:
 		cast_timer.start()
 		i.aoe = 1
+	if (Input.is_action_just_pressed("ui_aura"))  and cast_timer.get_time_left() == 0:
+		cast_timer.start()
+		i.aura = 1
 	
 func _process(_delta):
 	get_input()
@@ -71,6 +77,12 @@ func _process(_delta):
 		i.aoe = 0
 		emit_signal("aoe")
 		$AnimatedSprite.play("aoe_cast")
+		draw_finish()
+	if i.aura :
+		in_anim=1
+		i.aura = 0
+		emit_signal("aura")
+		$AnimatedSprite.play("aura_cast")
 		draw_finish()
 
 func _physics_process(_delta):
