@@ -94,7 +94,7 @@ func burst_from_gas(particle,contact_pos):
 # warning-ignore:return_value_discarded
 	connect("body_entered",self,"ignite")
 	translate(contact_pos)
-	IMPULSE = Vector2( rand_range(-7,7), rand_range(-7,7) )
+	IMPULSE = Vector2( rand_range(-3,3), rand_range(-3,3) )
 	CENTRAL = Vector2(0,-5)
 
 
