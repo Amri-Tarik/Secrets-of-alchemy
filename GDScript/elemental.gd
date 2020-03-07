@@ -28,6 +28,8 @@ func _ready():
 	self.queue_free()
 
 func burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit):
+	var pos_modifier_x = 0
+	var pos_modifier_y = 0
 	mouse_pos = mouse
 	var elemental = particle.instance()
 	elemental.scale = new_scale
@@ -39,12 +41,15 @@ func burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit):
 		set_max_contacts_reported(1)
 # warning-ignore:return_value_discarded
 		connect("body_entered",self,"ignite")
+	if layer_bit == 2 :
+		pos_modifier_x = rand_range(20,120)
+		pos_modifier_y = rand_range(10,60)
 	if get_node("../Hero/AnimatedSprite").flip_h :
-		translate(pos_burst_l)
+		translate( Vector2( pos_burst_l.x - pos_modifier_x, pos_burst_l.y - pos_modifier_y ) )
 		IMPULSE = Vector2(-rand_range(impulse[0],impulse[1]),rand_range(impulse[2],impulse[3]) + pos_burst_l.direction_to( mouse ).y*10*follow_mouse )
 		CENTRAL = central
 	else :
-		translate(pos_burst_r)
+		translate( Vector2( pos_burst_r.x + pos_modifier_x, pos_burst_r.y - pos_modifier_y ) )
 		IMPULSE = Vector2(rand_range(impulse[0],impulse[1]),rand_range(impulse[2],impulse[3]) + pos_burst_r.direction_to( mouse ).y*10*follow_mouse )
 		CENTRAL = central
 
@@ -69,11 +74,15 @@ func aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,aoe_coef,
 
 func ignite(body):
 	if ( body.get_collision_layer_bit(2) ) :
-		call_deferred("set_contact_monitor",false)
-		emit_signal("ignition",global_position)
-		body.queue_free()
-		queue_free()
-	
+		call_deferred("deferred_ignite",body)
+
+func deferred_ignite(body):
+	body.get_node("hitbox").disabled = true
+	$hitbox.disabled = true
+	emit_signal("ignition",global_position)
+	body.queue_free()
+	queue_free()
+
 func burst_from_gas(particle,contact_pos):
 	var elemental = particle.instance()
 	elemental.scale = Vector2(2,2)

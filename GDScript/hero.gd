@@ -35,16 +35,16 @@ func get_input():
 	if (Input.is_action_just_pressed("ui_accept")) and cast_timer.get_time_left() == 0:
 		cast_timer.start()
 		i.sheat = 1
-	if (Input.is_action_pressed("ui_up") and is_on_floor() ):
+	if (Input.is_action_just_pressed("ui_up") and is_on_floor() ):
 		i.jump = 1
 	if (Input.is_action_pressed("ui_right")):
 		i.right = 1
 	if (Input.is_action_pressed("ui_left")):
 		i.left = 1
-	if (Input.is_action_pressed("ui_select")) and cast_timer.get_time_left() == 0:
+	if (Input.is_action_just_pressed("ui_select")) and cast_timer.get_time_left() == 0:
 		cast_timer.start()
 		i.cast = 1
-	if (Input.is_action_pressed("ui_aoe"))  and cast_timer.get_time_left() == 0:
+	if (Input.is_action_just_pressed("ui_aoe"))  and cast_timer.get_time_left() == 0:
 		cast_timer.start()
 		i.aoe = 1
 	
