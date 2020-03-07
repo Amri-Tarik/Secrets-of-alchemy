@@ -12,7 +12,6 @@ offsets = PoolRealArray( 0, 0.34981, 0.365019 )
 colors = PoolColorArray( 1, 0.304688, 0, 1, 0.945313, 1, 0, 1, 0.1875, 0.1875, 0.1875, 1 )
 
 [node name="CPUParticles2D" type="CPUParticles2D"]
-position = Vector2( -0.360443, 1.00998 )
 emitting = false
 amount = 20
 lifetime = 1.2

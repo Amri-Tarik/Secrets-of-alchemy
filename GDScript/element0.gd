@@ -3,6 +3,7 @@ extends ColorRect
 var a = 1
 
 func _ready():
+# warning-ignore:return_value_discarded
 	get_parent().connect("change_element",self,"active")
 
 func active():

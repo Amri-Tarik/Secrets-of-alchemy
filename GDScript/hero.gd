@@ -22,6 +22,7 @@ func _ready():
 	cast_timer.set_one_shot(true)
 	add_child(cast_timer)
 	screen_size = get_viewport_rect().size
+# warning-ignore:return_value_discarded
 	$AnimatedSprite.connect("finished_drawing",self,"draw_finish")
 
 func draw_finish():

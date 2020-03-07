@@ -8,15 +8,16 @@ var mouse_pos
 var pos_burst_r
 var pos_burst_l
 
+signal ignition
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		mouse_pos = event.position
 
 func _ready():
-	mouse_pos = get_viewport().get_mouse_position()
 	CHAR_POS = get_node("../Hero").transform.get_origin()
-	pos_burst_r = Vector2(-30,-25) + CHAR_POS
-	pos_burst_l = Vector2(-110,-25) + CHAR_POS
+	pos_burst_r = Vector2(50,20) + CHAR_POS
+	pos_burst_l = Vector2(-50,20) + CHAR_POS
 	var timer = Timer.new()
 	self.add_child(timer)
 	timer.set_wait_time(5)
@@ -26,30 +27,66 @@ func _ready():
 	timer.queue_free()
 	self.queue_free()
 
-
-func burst(new_scale,particle,central,impulse,follow_mouse):
+func burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit):
+	mouse_pos = mouse
 	var elemental = particle.instance()
 	elemental.scale = new_scale
 	self.add_child(elemental)
-	CENTRAL = central
+	self.set_collision_layer_bit(layer_bit,true)
+	self.set_collision_mask_bit(layer_bit,false)
+	if layer_bit == 1 :
+		set_contact_monitor(true)
+		set_max_contacts_reported(1)
+# warning-ignore:return_value_discarded
+		connect("body_entered",self,"ignite")
 	if get_node("../Hero/AnimatedSprite").flip_h :
-		IMPULSE = Vector2(-rand_range(impulse[0],impulse[1]),rand_range(impulse[2],impulse[3]) + pos_burst_l.direction_to(to_local(mouse_pos+Vector2(0,100))).y*5*follow_mouse )
 		translate(pos_burst_l)
+		IMPULSE = Vector2(-rand_range(impulse[0],impulse[1]),rand_range(impulse[2],impulse[3]) + pos_burst_l.direction_to( mouse ).y*10*follow_mouse )
+		CENTRAL = central
 	else :
-		IMPULSE = Vector2(rand_range(impulse[0],impulse[1]),rand_range(impulse[2],impulse[3]) + pos_burst_r.direction_to(to_local(mouse_pos+Vector2(0,100))).y*5*follow_mouse )
 		translate(pos_burst_r)
+		IMPULSE = Vector2(rand_range(impulse[0],impulse[1]),rand_range(impulse[2],impulse[3]) + pos_burst_r.direction_to( mouse ).y*10*follow_mouse )
+		CENTRAL = central
 
-
-func aoe(new_scale,fill_height,particle,central,impulse,k,ground,aoe_coef):
+func aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,aoe_coef,layer_bit):
+	mouse_pos = mouse
 	var elemental = particle.instance()
 	elemental.scale = new_scale
 	self.add_child(elemental)
+	self.set_collision_layer_bit(layer_bit,true)
+	self.set_collision_mask_bit(layer_bit,false)
+	if layer_bit == 1 :
+		set_contact_monitor(true)
+		set_max_contacts_reported(1)
+# warning-ignore:return_value_discarded
+		connect("body_entered",self,"ignite")
 	translate(Vector2(mouse_pos.x + aoe_length*k - 12.5*aoe_length , ground[k].y -30 -40*fill_height) )
 	CENTRAL = central
 	IMPULSE = Vector2( rand_range(impulse[0],impulse[1]), rand_range(impulse[2],impulse[3]) )
 	elemental.gravity = Vector2(0,-250*aoe_coef)
 #	self.scale = Vector2(2,2) 
 #	elemental.scale_amount = elemental.scale_amount
+
+func ignite(body):
+	if ( body.get_collision_layer_bit(2) ) :
+		call_deferred("set_contact_monitor",false)
+		emit_signal("ignition",global_position)
+		body.queue_free()
+		queue_free()
+	
+func burst_from_gas(particle,contact_pos):
+	var elemental = particle.instance()
+	elemental.scale = Vector2(2,2)
+	self.add_child(elemental)
+	self.set_collision_layer_bit(1,true)
+	self.set_collision_mask_bit(1,false)
+	set_contact_monitor(true)
+	set_max_contacts_reported(1)
+# warning-ignore:return_value_discarded
+	connect("body_entered",self,"ignite")
+	translate(contact_pos)
+	IMPULSE = Vector2( rand_range(-7,7), rand_range(-7,7) )
+	CENTRAL = Vector2(0,-5)
 
 
 func _integrate_forces(_state):
