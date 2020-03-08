@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://GDScript/particle.gd" type="Script" id=1]
-[ext_resource path="res://scenes/particles/fire.tres" type="Gradient" id=2]
+[ext_resource path="res://scenes/particles/Ressources/fire.tres" type="Gradient" id=2]
 
 [sub_resource type="Curve" id=1]
 min_value = 1.02

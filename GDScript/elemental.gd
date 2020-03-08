@@ -1,6 +1,7 @@
 extends RigidBody2D
 
-var steam_grad = preload("res://scenes/particles/steam.tres")
+var steam_grad = preload("res://scenes/particles/Ressources/steam.tres")
+var water_physics = preload("res://scenes/particles/Ressources/water.tres")
 
 export var aoe_length = 10
 var CENTRAL = Vector2()
@@ -164,6 +165,7 @@ func interaction(layer_bit):
 		connect("body_entered",self,"ignite")
 	if layer_bit == 3 :
 		$hitbox.scale = Vector2(3,3)
+		set_physics_material_override(water_physics)
 		set_contact_monitor(true)
 		set_max_contacts_reported(1)
 # warning-ignore:return_value_discarded
