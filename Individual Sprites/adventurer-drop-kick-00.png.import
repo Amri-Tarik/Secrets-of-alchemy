@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/adventurer-swrd-drw-03.png-39e31bb2056b1031244b08d6d88d1460.stex"
+path="res://.import/adventurer-drop-kick-00.png-8463589810a8a897de4aef43e045f867.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Individual Sprites/adventurer-swrd-drw-03.png"
-dest_files=[ "res://.import/adventurer-swrd-drw-03.png-39e31bb2056b1031244b08d6d88d1460.stex" ]
+source_file="res://Individual Sprites/adventurer-drop-kick-00.png"
+dest_files=[ "res://.import/adventurer-drop-kick-00.png-8463589810a8a897de4aef43e045f867.stex" ]
 
 [params]
 

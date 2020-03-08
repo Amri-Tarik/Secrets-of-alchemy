@@ -22,6 +22,8 @@ func _ready():
 	$Hero.connect("aoe",self,"aoe")
 # warning-ignore:return_value_discarded
 	$Hero.connect("aura",self,"aura")
+# warning-ignore:return_value_discarded
+	$Hero.connect("dash",self,"dash")
 
 
 func _process(_delta):
@@ -52,10 +54,12 @@ func burst():
 
 func deferred_burst():
 	for _k in range(25):
-			var elemental = atom.instance()
-			self.add_child(elemental)
-			elemental.connect("ignition",self,"ignite")
-			elemental.burst(mouse_pos,element[i].burstscale,element[i].particle, element[i].centralburst, element[i].impulseburst, element[i].follow_mouse,element[i].layer_bit)
+		var elemental = atom.instance()
+		self.add_child(elemental)
+		elemental.connect("ignition",self,"ignite")
+		elemental.burst(mouse_pos,element[i].burstscale,element[i].particle, element[i].centralburst, element[i].impulseburst, element[i].follow_mouse,element[i].layer_bit)
+
+
 
 func aoe():
 	yield(get_tree().create_timer(0.2),"timeout")
@@ -81,8 +85,22 @@ func deferred_ignite(contact_pos):
 		elemental.connect("ignition",self,"ignite")
 		elemental.burst_from_gas(flame.particle,contact_pos)
 
+
+
 func aura():
 	call_deferred("deferred_aura")
 
 func deferred_aura():
 	emit_signal("aura",atom,element[i].particle,element[i].aurascale,element[i].layer_bit)
+
+
+
+func dash(char_pos):
+	call_deferred("deferred_dash",char_pos)
+
+func deferred_dash(char_pos):
+	for fill_height in range(element[i].aoe_fill):
+		var elemental = atom.instance()
+		self.add_child(elemental)
+		elemental.connect("ignition",self,"ignite")
+		elemental.dash(char_pos,element[i].aoescale,fill_height,element[i].particle,element[i].centralburst,element[i].layer_bit)

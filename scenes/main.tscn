@@ -15,62 +15,66 @@ GRAVITY = 45
 JUMP_POWER = -900
 
 [node name="StaticBody2D3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 477.795, 458.669 )
+position = Vector2( 480.659, 480.149 )
 rotation = -0.139626
 scale = Vector2( 0.589, 1 )
 
 [node name="StaticBody2D4" parent="." instance=ExtResource( 2 )]
-position = Vector2( -34.4339, 209.853 )
+position = Vector2( -36.1041, 263.299 )
 rotation = -1.58301
 
 [node name="StaticBody2D11" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1371.91, 285.22 )
+position = Vector2( 1485.62, 254.748 )
 rotation = -1.58301
 
 [node name="StaticBody2D13" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1049.34, 268.64 )
+position = Vector2( 1180.09, 282.496 )
 rotation = -1.58301
 scale = Vector2( 0.476, 1 )
 
 [node name="StaticBody2D12" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1376.44, 663.563 )
+position = Vector2( 1323.81, 818.982 )
+rotation = -1.58301
+
+[node name="StaticBody2D14" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1489.98, 728.542 )
 rotation = -1.58301
 
 [node name="StaticBody2D2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 202.088, 549.455 )
+position = Vector2( 188.727, 571.167 )
 rotation = 0.651008
 
 [node name="StaticBody2D5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1013.56, 509.455 )
+position = Vector2( 1012.13, 523.775 )
 rotation = 0.0698132
 scale = Vector2( 0.987, 1 )
 
 [node name="StaticBody2D6" parent="." instance=ExtResource( 2 )]
-position = Vector2( 695.184, 577.86 )
+position = Vector2( 695.184, 603.636 )
 scale = Vector2( 0.13, 1 )
 
 [node name="StaticBody2D7" parent="." instance=ExtResource( 2 )]
-position = Vector2( 886.506, 674.669 )
+position = Vector2( 886.506, 714.753 )
 scale = Vector2( 2.986, 1 )
 
 [node name="StaticBody2D9" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1255.4, 352.124 )
+position = Vector2( 1230.35, 355.464 )
 scale = Vector2( 1.355, 1 )
 
 [node name="StaticBody2D10" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1231.28, 29.5532 )
+position = Vector2( 1363.97, 0.0577507 )
 scale = Vector2( 0.74, 1 )
 
 [node name="StaticBody2D8" parent="." instance=ExtResource( 2 )]
-position = Vector2( 184.117, 567.426 )
+position = Vector2( 180.777, 589.138 )
 rotation = 0.69115
 scale = Vector2( 0.946, 4.222 )
 
 [node name="element0" type="ColorRect" parent="."]
-margin_left = 60.0
-margin_top = 589.449
-margin_right = 115.0
-margin_bottom = 644.449
+margin_left = 95.7993
+margin_top = 619.521
+margin_right = 150.799
+margin_bottom = 674.521
 color = Color( 0.12549, 0.545098, 0.94902, 1 )
 script = ExtResource( 5 )
 __meta__ = {

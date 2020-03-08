@@ -114,6 +114,20 @@ func deferred_aura(particle,aura_scale,layer_bit):
 
 
 
+func dash(char_pos,aoescale,fill_height,particle,central,layer_bit):
+	call_deferred("deferred_dash",char_pos,aoescale,fill_height,particle,central,layer_bit)
+
+func deferred_dash(char_pos,aoescale,fill_height,particle,central,layer_bit):
+	var elemental = particle.instance()
+	elemental.scale = aoescale
+	self.add_child(elemental)
+	self.set_collision_layer_bit(layer_bit,true)
+	self.set_collision_mask_bit(layer_bit,false)
+	interaction(layer_bit)
+	translate(Vector2(char_pos.x , char_pos.y +30 -40*fill_height) )
+	CENTRAL = central
+
+
 
 func ignite(body):
 	if ( body.get_collision_layer_bit(2) && steam == 0 ) :
