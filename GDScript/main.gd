@@ -5,8 +5,9 @@ const atom = preload("res://scenes/particles/elemental.tscn")
 var flame = { "particle" : preload("res://scenes/particles/spark.tscn"),"burstscale" : Vector2(1.5,1.5),"aoescale" : Vector2(2.5,2.5),"aurascale" : Vector2(2,2), "centralburst" : Vector2(-1.5,-5),"impulseburst" : [4,8,0,-2],"centralaoe" : Vector2(0,0),"impulseaoe" : [-1,1,0,0], "follow_mouse" : 1, "aoe_coef" : 2, "aoe_fill" : 2, "layer_bit" : 1 } 
 var gas = { "particle" : preload("res://scenes/particles/gas.tscn"),"burstscale" : Vector2(3,3), "aoescale" : Vector2(3,3),"aurascale" : Vector2(3,3), "centralburst" : Vector2(0,-0.5),"impulseburst" : [-0.5,0.5,-0.5,0.5],"centralaoe" : Vector2(0,-0.3),"impulseaoe" : [-0.8,0.8,0,-0.5], "follow_mouse" : 0, "aoe_coef" : 0, "aoe_fill" : 3, "layer_bit" : 2}
 var water = { "particle" : preload("res://scenes/particles/water.tscn"),"burstscale" : Vector2(1.5,1.5), "aoescale" : Vector2(2.5,2.5),"aurascale" : Vector2(1.5,1.5), "centralburst" : Vector2(0,12),"impulseburst" : [3,6,-5,1],"centralaoe" : Vector2(0,12),"impulseaoe" : [-6,6,0,-4], "follow_mouse" : 1, "aoe_coef" : 0, "aoe_fill" : 2, "layer_bit" : 3}
+var lightning = { "particle" : preload("res://scenes/particles/lightning.tscn"),"burstscale" : Vector2(0.5,0.5), "aoescale" : Vector2(1.5,1.5),"aurascale" : Vector2(1.5,1.5), "centralburst" : Vector2(0,0),"impulseburst" : [3,6,-0.1,0.1],"centralaoe" : Vector2(0,0),"impulseaoe" : [0,0,0,0], "follow_mouse" : 1, "aoe_coef" : 2, "aoe_fill" : 3, "layer_bit" : 4}
 
-var element = [flame,gas,water]
+var element = [flame,gas,water,lightning]
 var i = 0
 var ground = {}
 var mouse_pos
@@ -36,9 +37,12 @@ func _process(_delta):
 	elif(Input.is_action_just_pressed("ui_water")):
 		i = 2
 		emit_signal("change_element",i)
+	elif(Input.is_action_just_pressed("ui_lightning")):
+		i = 3
+		emit_signal("change_element",i)
 	elif(Input.is_action_just_pressed("ui_switch")):
 		i += 1
-		if i == 3:
+		if i == 4:
 			i = 0
 		emit_signal("change_element",i)
 

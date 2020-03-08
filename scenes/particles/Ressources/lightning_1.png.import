@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/adventurer-drop-kick-00.png-cfdc0a2789089e25eb070433f53768ee.stex"
+path="res://.import/lightning_1.png-8c4e10f3935126df80c97f58c59bb68f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/particles/Ressources/adventurer-drop-kick-00.png"
-dest_files=[ "res://.import/adventurer-drop-kick-00.png-cfdc0a2789089e25eb070433f53768ee.stex" ]
+source_file="res://scenes/particles/Ressources/lightning_1.png"
+dest_files=[ "res://.import/lightning_1.png-8c4e10f3935126df80c97f58c59bb68f.stex" ]
 
 [params]
 

@@ -1,6 +1,5 @@
 extends CPUParticles2D
 
-
 func _ready():
 	emitting = false
 # warning-ignore:return_value_discarded

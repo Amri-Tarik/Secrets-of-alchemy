@@ -12,3 +12,5 @@ func active(i):
 		color = Color("30f800")
 	elif i == 2 :
 		color = Color("208bf2")
+	elif i == 3 :
+		color = Color("FFFFFF")

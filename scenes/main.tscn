@@ -10,7 +10,7 @@
 script = ExtResource( 4 )
 
 [node name="Hero" parent="." instance=ExtResource( 1 )]
-position = Vector2( 568.568, 281.044 )
+position = Vector2( 567.136, 281.044 )
 GRAVITY = 45
 JUMP_POWER = -900
 
