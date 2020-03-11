@@ -81,9 +81,10 @@ func _process(_delta):
 	if i.dash :
 		i.dash = 0
 		dash()
+		var flipped = (mouse_pos.x <= global_position.x)
 		for _k in range(7):
 			yield(get_tree().create_timer(0.05),"timeout")
-			emit_signal("dash",global_position)
+			emit_signal("dash",global_position,flipped,front_dash)
 	if i.aura :
 		in_anim=1
 		i.aura = 0

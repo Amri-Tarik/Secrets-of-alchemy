@@ -2,15 +2,19 @@ extends Node2D
 
 const atom = preload("res://scenes/particles/elemental.tscn")
 
-var flame = { "particle" : preload("res://scenes/particles/spark.tscn"),"burstscale" : Vector2(1.5,1.5),"aoescale" : Vector2(2.5,2.5),"aurascale" : Vector2(2,2), "centralburst" : Vector2(-1.5,-5),"impulseburst" : [4,8,0,-2],"centralaoe" : Vector2(0,0),"impulseaoe" : [-1,1,0,0], "follow_mouse" : 1, "aoe_coef" : 2, "aoe_fill" : 2, "layer_bit" : 1 } 
-var gas = { "particle" : preload("res://scenes/particles/gas.tscn"),"burstscale" : Vector2(3,3), "aoescale" : Vector2(3,3),"aurascale" : Vector2(3,3), "centralburst" : Vector2(0,-0.5),"impulseburst" : [-0.5,0.5,-0.5,0.5],"centralaoe" : Vector2(0,-0.3),"impulseaoe" : [-0.8,0.8,0,-0.5], "follow_mouse" : 0, "aoe_coef" : 0, "aoe_fill" : 3, "layer_bit" : 2}
-var water = { "particle" : preload("res://scenes/particles/water.tscn"),"burstscale" : Vector2(1.5,1.5), "aoescale" : Vector2(2.5,2.5),"aurascale" : Vector2(1.5,1.5), "centralburst" : Vector2(0,12),"impulseburst" : [3,6,-5,1],"centralaoe" : Vector2(0,12),"impulseaoe" : [-6,6,0,-4], "follow_mouse" : 1, "aoe_coef" : 0, "aoe_fill" : 2, "layer_bit" : 3}
-var lightning = { "particle" : preload("res://scenes/particles/lightning.tscn"),"burstscale" : Vector2(0.5,0.5), "aoescale" : Vector2(1.5,1.5),"aurascale" : Vector2(1.5,1.5), "centralburst" : Vector2(0,0),"impulseburst" : [3,6,-0.1,0.1],"centralaoe" : Vector2(0,0),"impulseaoe" : [0,0,0,0], "follow_mouse" : 1, "aoe_coef" : 2, "aoe_fill" : 3, "layer_bit" : 4}
+var earth = { "particle" : preload("res://scenes/particles/earth.tscn"),"burstscale" : Vector2(1,1), "aoescale" : Vector2(1.5,1.5),"aurascale" : Vector2(1.5,1.5), "centralburst" : Vector2(0,0),"impulseburst" : [0,7,-4,0],"centralaoe" : Vector2(0,0),"impulseaoe" : [0,0,0,0], "follow_mouse" : 1, "aoe_fill" : 1, "layer_bit" : 0}
+var flame = { "particle" : preload("res://scenes/particles/spark.tscn"),"burstscale" : Vector2(1.5,1.5),"aoescale" : Vector2(2.5,2.5),"aurascale" : Vector2(2,2), "centralburst" : Vector2(-1.5,-5),"impulseburst" : [4,8,0,-2],"centralaoe" : Vector2(0,0),"impulseaoe" : [-1,1,0,0], "follow_mouse" : 1, "aoe_fill" : 2, "layer_bit" : 1 } 
+var gas = { "particle" : preload("res://scenes/particles/gas.tscn"),"burstscale" : Vector2(3,3), "aoescale" : Vector2(3,3),"aurascale" : Vector2(3,3), "centralburst" : Vector2(0,-0.5),"impulseburst" : [-0.5,0.5,-0.5,0.5],"centralaoe" : Vector2(0,-0.3),"impulseaoe" : [-0.8,0.8,0,-0.5], "follow_mouse" : 0, "aoe_fill" : 3, "layer_bit" : 2}
+var water = { "particle" : preload("res://scenes/particles/water.tscn"),"burstscale" : Vector2(1.5,1.5), "aoescale" : Vector2(2.5,2.5),"aurascale" : Vector2(1.5,1.5), "centralburst" : Vector2(0,12),"impulseburst" : [3,6,-5,1],"centralaoe" : Vector2(0,12),"impulseaoe" : [-6,6,0,-4], "follow_mouse" : 1, "aoe_fill" : 2, "layer_bit" : 3}
+var lightning = { "particle" : preload("res://scenes/particles/lightning.tscn"),"burstscale" : Vector2(0.5,0.5), "aoescale" : Vector2(1.5,1.5),"aurascale" : Vector2(1.5,1.5), "centralburst" : Vector2(0,0),"impulseburst" : [3,6,-0.1,0.1],"centralaoe" : Vector2(0,0),"impulseaoe" : [0,0,0,0], "follow_mouse" : 1, "aoe_fill" : 3, "layer_bit" : 4}
 
-var element = [flame,gas,water,lightning]
+
+var element = [flame,gas,water,lightning,earth]
 var i = 0
 var ground = {}
 var mouse_pos
+var CHAR_POS
+var temp_ground
 export var aoe_length = 10
 
 signal change_element
@@ -40,28 +44,42 @@ func _process(_delta):
 	elif(Input.is_action_just_pressed("ui_lightning")):
 		i = 3
 		emit_signal("change_element",i)
+	elif(Input.is_action_just_pressed("ui_earth")):
+		i = 4
+		emit_signal("change_element",i)
 	elif(Input.is_action_just_pressed("ui_switch")):
 		i += 1
-		if i == 4:
+		if i == 5:
 			i = 0
 		emit_signal("change_element",i)
 
 func _physics_process(_delta):
 	mouse_pos = get_viewport().get_mouse_position()
-	if(Input.is_action_just_pressed("ui_aoe")) :
+	if (Input.is_action_just_pressed("ui_aoe")) :
 		for col in range(25) :
 			var space_state = get_world_2d().direct_space_state
-			ground[col] = space_state.intersect_ray(Vector2(mouse_pos.x + aoe_length*col - 12.5*aoe_length,mouse_pos.y),Vector2(mouse_pos.x + aoe_length*col - 12.5*aoe_length, 1400),[],1).position
+			temp_ground = space_state.intersect_ray(Vector2(mouse_pos.x + aoe_length*col - 12.5*aoe_length,mouse_pos.y),Vector2(mouse_pos.x + aoe_length*col - 12.5*aoe_length, 1400),[$Hero],1)
+			if temp_ground.empty():
+				ground[col] = Vector2()
+#				print(temp_ground)
+			else :
+				ground[col] = temp_ground.position
+	if i == 4 and (Input.is_action_just_pressed("ui_burst")):
+		CHAR_POS = $Hero.transform.get_origin()
+		var space_state = get_world_2d().direct_space_state
+		ground = space_state.intersect_ray(CHAR_POS,Vector2(CHAR_POS.x, 2000),[],1).position
+
 
 func burst():
 	call_deferred("deferred_burst")
 
 func deferred_burst():
+	CHAR_POS = $Hero.transform.get_origin()
 	for _k in range(25):
 		var elemental = atom.instance()
 		self.add_child(elemental)
 		elemental.connect("ignition",self,"ignite")
-		elemental.burst(mouse_pos,element[i].burstscale,element[i].particle, element[i].centralburst, element[i].impulseburst, element[i].follow_mouse,element[i].layer_bit)
+		elemental.burst(mouse_pos,element[i].burstscale,element[i].particle, element[i].centralburst, element[i].impulseburst, element[i].follow_mouse,element[i].layer_bit,ground,CHAR_POS)
 
 
 
@@ -75,7 +93,7 @@ func deferred_aoe():
 			var elemental = atom.instance()
 			self.add_child(elemental)
 			elemental.connect("ignition",self,"ignite")
-			elemental.aoe(mouse_pos,element[i].aoescale,fill_height,element[i].particle,element[i].centralaoe, element[i].impulseaoe,k,ground,element[i].aoe_coef,element[i].layer_bit)
+			elemental.aoe(mouse_pos,element[i].aoescale,fill_height,element[i].particle,element[i].centralaoe, element[i].impulseaoe,k,ground,element[i].layer_bit)
 
 
 
@@ -99,12 +117,12 @@ func deferred_aura():
 
 
 
-func dash(char_pos):
-	call_deferred("deferred_dash",char_pos)
+func dash(char_pos,flipped,front_dash):
+	call_deferred("deferred_dash",char_pos,flipped,front_dash)
 
-func deferred_dash(char_pos):
+func deferred_dash(char_pos,flipped,front_dash):
 	for fill_height in range(element[i].aoe_fill):
 		var elemental = atom.instance()
 		self.add_child(elemental)
 		elemental.connect("ignition",self,"ignite")
-		elemental.dash(char_pos,element[i].aoescale,fill_height,element[i].particle,element[i].centralburst,element[i].layer_bit)
+		elemental.dash(char_pos,element[i].aoescale,fill_height,element[i].particle,element[i].centralburst,element[i].layer_bit,flipped,front_dash)

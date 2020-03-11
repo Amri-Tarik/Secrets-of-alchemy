@@ -14,3 +14,5 @@ func active(i):
 		color = Color("208bf2")
 	elif i == 3 :
 		color = Color("FFFFFF")
+	elif i == 4 :
+		color = Color("875523")

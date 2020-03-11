@@ -9,7 +9,6 @@ var lightning = preload("res://scenes/particles/lightning.tscn")
 export var aoe_length = 10
 var CENTRAL = Vector2()
 var IMPULSE = Vector2()
-var CHAR_POS
 var mouse_pos
 var pos_burst_r
 var pos_burst_l
@@ -29,7 +28,7 @@ func _input(event):
 		mouse_pos = event.position
 
 func _ready():
-	set_mode(2)
+	set_mode(RigidBody2D.MODE_CHARACTER)
 	timer = Timer.new()
 	self.add_child(timer)
 	timer.set_one_shot(true)
@@ -43,13 +42,16 @@ func _ready():
 
 
 
-func burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit):
-	call_deferred("deferred_burst",mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit)
+func burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit,ground,char_pos):
+	call_deferred("deferred_burst",mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit,ground,char_pos)
 
-func deferred_burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit):
-	CHAR_POS = get_node("../Hero").transform.get_origin()
-	pos_burst_r = Vector2(50,20) + CHAR_POS
-	pos_burst_l = Vector2(-50,20) + CHAR_POS
+func deferred_burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit,ground,char_pos):
+	if layer_bit == 0:
+		pos_burst_l = Vector2(-50,10) + ground
+		pos_burst_r = Vector2(50,10) + ground 
+	else :
+		pos_burst_r = Vector2(50,20) + char_pos
+		pos_burst_l = Vector2(-50,20) + char_pos
 	var pos_modifier_x = 0
 	var pos_modifier_y = 0
 	mouse_pos = mouse
@@ -73,11 +75,10 @@ func deferred_burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_
 
 
 
-func aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,aoe_coef,layer_bit):
-	call_deferred("deferred_aoe",mouse,new_scale,fill_height,particle,central,impulse,k,ground,aoe_coef,layer_bit)
+func aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,layer_bit):
+	call_deferred("deferred_aoe",mouse,new_scale,fill_height,particle,central,impulse,k,ground,layer_bit)
 
-func deferred_aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,aoe_coef,layer_bit):
-	CHAR_POS = get_node("../Hero").transform.get_origin()
+func deferred_aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,layer_bit):
 	mouse_pos = mouse
 	var elemental = particle.instance()
 	elemental.scale = new_scale
@@ -89,7 +90,8 @@ func deferred_aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,
 	translate(Vector2(mouse_pos.x + aoe_length*k - 12.5*aoe_length , ground[k].y -30 -40*fill_height) )
 	CENTRAL = central
 	IMPULSE = Vector2( rand_range(impulse[0],impulse[1]), rand_range(impulse[2],impulse[3]) )
-	elemental.gravity = Vector2(0,-250*aoe_coef)
+	if layer_bit == 1:
+		elemental.gravity = Vector2(0,-140)
 
 
 
@@ -102,7 +104,8 @@ func deferred_aura(particle,aura_scale,layer_bit):
 	var elemental = particle.instance()
 	self.add_child(elemental)
 	elemental.scale = aura_scale
-	elemental.set_lifetime(5)
+	if layer_bit != 0:
+		elemental.set_lifetime(5)
 	self.set_collision_layer_bit(layer_bit,true)
 	self.set_collision_mask_bit(layer_bit,false)
 	self.set_collision_mask_bit(0,false)
@@ -112,10 +115,11 @@ func deferred_aura(particle,aura_scale,layer_bit):
 
 
 
-func dash(char_pos,aoescale,fill_height,particle,central,layer_bit):
-	call_deferred("deferred_dash",char_pos,aoescale,fill_height,particle,central,layer_bit)
+func dash(char_pos,aoescale,fill_height,particle,central,layer_bit,flipped,front_dash):
+	call_deferred("deferred_dash",char_pos,aoescale,fill_height,particle,central,layer_bit,flipped,front_dash)
 
-func deferred_dash(char_pos,aoescale,fill_height,particle,central,layer_bit):
+func deferred_dash(char_pos,aoescale,fill_height,particle,central,layer_bit,flipped,front_dash):
+	var pos_modifier = 0
 	var elemental = particle.instance()
 	elemental.scale = aoescale
 	self.add_child(elemental)
@@ -123,7 +127,11 @@ func deferred_dash(char_pos,aoescale,fill_height,particle,central,layer_bit):
 	self.set_collision_layer_bit(layer_bit,true)
 	self.set_collision_mask_bit(layer_bit,false)
 	interaction(layer_bit)
-	translate(Vector2(char_pos.x , char_pos.y +30 -40*fill_height) )
+	if flipped and front_dash:
+		pos_modifier = 50
+	elif front_dash:
+		pos_modifier = -50
+	translate(Vector2(char_pos.x + pos_modifier , char_pos.y +30 -40*fill_height) )
 	CENTRAL = central
 
 
@@ -214,15 +222,18 @@ func interaction(layer_bit):
 		set_max_contacts_reported(1)
 # warning-ignore:return_value_discarded
 		connect("body_entered",self,"check_contact")
+	elif layer_bit == 0:
+		yield(get_tree().create_timer(0.5),"timeout")
+		set_mode(RigidBody2D.MODE_STATIC)
+#		set_linear_damp(300)
 
 
 func check_contact(body):
-	if get_collision_layer_bit(1):
+	if get_collision_layer_bit(1) or get_collision_layer_bit(4):
 		ignite(body)
 	elif get_collision_layer_bit(3) or electrified:
 		put_out(body)
 		electrify(body)
-
 
 func _integrate_forces(state):
 	if no_forces == 0 :

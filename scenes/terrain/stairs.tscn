@@ -6,7 +6,7 @@ extents = Vector2( 240.768, 32 )
 [node name="StaticBody2D" type="StaticBody2D"]
 position = Vector2( 174.343, 330.175 )
 rotation = 0.811578
-collision_mask = 524290
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 3.92673, 51.1372 )
