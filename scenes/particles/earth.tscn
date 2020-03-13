@@ -1,13 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://GDScript/particle.gd" type="Script" id=1]
+[ext_resource path="res://scenes/particles/Ressources/earth.tres" type="Gradient" id=2]
 
-[sub_resource type="Gradient" id=1]
-colors = PoolColorArray( 0.515625, 0.266635, 0.0664673, 1, 0.554688, 0.444855, 0.257843, 1 )
+[sub_resource type="RectangleShape2D" id=1]
 
 [node name="CPUParticles2D" type="CPUParticles2D"]
 emitting = false
-amount = 15
+amount = 25
 lifetime = 10.0
 one_shot = true
 speed_scale = 3.0
@@ -19,9 +19,18 @@ spread = 4.09
 gravity = Vector2( 0, 0.05 )
 scale_amount = 4.0
 scale_amount_random = 0.44
-color_ramp = SubResource( 1 )
+color_ramp = ExtResource( 2 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 62
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )

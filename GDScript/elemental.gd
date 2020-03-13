@@ -1,6 +1,8 @@
 extends RigidBody2D
 
 var steam_grad = preload("res://scenes/particles/Ressources/steam.tres")
+var magma_grad = preload("res://scenes/particles/Ressources/magma.tres")
+var earth_grad = preload("res://scenes/particles/Ressources/earth.tres")
 var water_physics = preload("res://scenes/particles/Ressources/water.tres")
 var normal_physics = preload("res://scenes/particles/Ressources/friction_normal.tres")
 var lightning = preload("res://scenes/particles/lightning.tscn")
@@ -18,6 +20,8 @@ var aura_shape = 0
 var no_forces = 0
 var steam = 0
 var electrified = false
+var magma = 0
+var frozen = 0
 
 signal ignition
 
@@ -137,7 +141,6 @@ func deferred_dash(char_pos,aoescale,fill_height,particle,central,layer_bit,flip
 
 
 
-
 func ignite(body):
 	if ( body.get_collision_layer_bit(2) && steam == 0 ) :
 		call_deferred("deferred_ignite",body)
@@ -168,15 +171,18 @@ func deferred_burst_from_gas(particle,contact_pos):
 
 
 func put_out(body):
-	if ( body.get_collision_layer_bit(1) && body.get("steam") == 0) :
-		call_deferred("deferred_put_out",body)
+	if ( body.get_collision_layer_bit(3) or body.get("electrified") ) :
+		call_deferred("deferred_put_out")
 
-func deferred_put_out(body):
-	body.get_node("hitbox").disabled = true
-	body.set("steam",1)
-	body.get_node("CPUParticles2D").set_color_ramp(steam_grad)
-	if body.get("aura_shape") == 0 :
-		body.apply_central_impulse(Vector2(0,-40))
+func deferred_put_out():
+	steam = 1
+	if magma == 0 :
+		$hitbox.disabled = true
+		get_node("CPUParticles2D").set_color_ramp(steam_grad)
+	else :
+		get_node("CPUParticles2D").set_color_ramp(earth_grad)
+	if get("aura_shape") == 0 :
+		apply_central_impulse(Vector2(0,-40))
 
 
 
@@ -201,6 +207,24 @@ func deferred_electrify(body):
 
 
 
+func melt(body):
+	if ( body.get_collision_layer_bit(1) && body.get("steam") == 0 && magma == 0 ) :
+		call_deferred("deferred_melt",body)
+
+func deferred_melt(body):
+	magma = 1
+	get_node("CPUParticles2D/Area2D").queue_free()
+	set_mode(RigidBody2D.MODE_CHARACTER)
+	add_central_force(Vector2(rand_range(-70,70),300))
+	get_node("CPUParticles2D").set_color_ramp(magma_grad)
+	set_collision_layer_bit(1,true)
+	set_collision_mask_bit(1,false)
+	set_collision_layer_bit(0,false)
+	set_collision_mask_bit(0,true)
+	if body.get("magma") == 0 :
+		body.queue_free()
+
+
 
 
 func interaction(layer_bit):
@@ -223,16 +247,24 @@ func interaction(layer_bit):
 # warning-ignore:return_value_discarded
 		connect("body_entered",self,"check_contact")
 	elif layer_bit == 0:
+		set_contact_monitor(true)
+		set_max_contacts_reported(1)
 		yield(get_tree().create_timer(0.5),"timeout")
 		set_mode(RigidBody2D.MODE_STATIC)
-#		set_linear_damp(300)
+		no_forces = 1
+# warning-ignore:return_value_discarded
+		get_node("CPUParticles2D/Area2D").connect("body_entered",self,"melt")
+		
+
 
 
 func check_contact(body):
-	if get_collision_layer_bit(1) or get_collision_layer_bit(4):
-		ignite(body)
-	elif get_collision_layer_bit(3) or electrified:
+	if get_collision_layer_bit(1) and steam == 0 :
 		put_out(body)
+		ignite(body)
+	elif get_collision_layer_bit(4) :
+		ignite(body)
+	elif get_collision_layer_bit(3) and electrified == false:
 		electrify(body)
 
 func _integrate_forces(state):
