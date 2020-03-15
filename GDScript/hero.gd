@@ -21,6 +21,9 @@ var aura_timer
 var dash_timer
 var mouse_pos
 var front_dash = 0
+var boosted = 0
+var dash_boosted = 0
+var floating = 0
 
 func _ready():
 	cast_timer = Timer.new()
@@ -64,6 +67,7 @@ func get_input():
 		i.aura = 1
 	
 func _process(_delta):
+	SPEED = 200
 	mouse_pos = get_global_mouse_position()
 	get_input()
 	if i.cast :
@@ -124,19 +128,38 @@ func _physics_process(_delta):
 			$AnimatedSprite.play("idle")
 	
 	velocity.y += GRAVITY 
-	if velocity.y < 0 and is_on_floor() == false and in_anim == 0 and front_dash == 0:
+	if velocity.y < 400 and is_on_floor() == false and in_anim == 0 and front_dash == 0:
 		$AnimatedSprite.play("jump")
-	if velocity.y > 20 and is_on_floor() == false and in_anim == 0 and front_dash == 0:
+	if velocity.y > 400 and is_on_floor() == false and in_anim == 0 and front_dash == 0:
 		$AnimatedSprite.play("fall")
 		jumping = 0
 	if (dash_timer.get_time_left() != 0) and front_dash:
 		$AnimatedSprite.play("dash_front")
 		
-	
+	if dash_timer.get_time_left() == 0 && boosted :
+		velocity.x = velocity.x * 2
+		velocity.y += -50
+	elif boosted and dash_boosted:
+		velocity = velocity * 1.05
+		dash_boosted = 0
+	if floating :
+		velocity.y += -20
 	velocity = move_and_slide(velocity,Vector2(0,-1),true,2)
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 
+
+func wind_push():
+	boosted = 1
+	dash_boosted = 1
+	yield(get_tree().create_timer(0.7),"timeout")
+	boosted = 0
+
+func wind_float():
+	floating = 1
+	yield(get_tree().create_timer(5),"timeout")
+	floating = 0
+	
 func dash():
 	velocity = global_position.direction_to(mouse_pos).normalized()*1200
 	if (abs(velocity.x) > abs(velocity.y)):

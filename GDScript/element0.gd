@@ -2,7 +2,7 @@ extends ColorRect
 
 func _ready():
 # warning-ignore:return_value_discarded
-	get_parent().connect("change_element",self,"active")
+	get_parent().get_parent().connect("change_element",self,"active")
 	color = Color("f47302")
 
 func active(i):
@@ -15,4 +15,6 @@ func active(i):
 	elif i == 3 :
 		color = Color("FFFFFF")
 	elif i == 4 :
+		color = Color("AAAAAA")
+	elif i == 5 :
 		color = Color("875523")

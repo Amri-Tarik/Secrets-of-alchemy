@@ -50,7 +50,7 @@ func burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit,groun
 	call_deferred("deferred_burst",mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit,ground,char_pos)
 
 func deferred_burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit,ground,char_pos):
-	if layer_bit == 0:
+	if layer_bit == 6:
 		pos_burst_l = Vector2(-50,10) + ground
 		pos_burst_r = Vector2(50,10) + ground 
 	else :
@@ -88,6 +88,8 @@ func deferred_aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,
 	elemental.scale = new_scale
 	self.add_child(elemental)
 	$hitbox.scale = Vector2(3,3)
+	if layer_bit != 6:
+		elemental.set_lifetime(3)
 	self.set_collision_layer_bit(layer_bit,true)
 	self.set_collision_mask_bit(layer_bit,false)
 	interaction(layer_bit)
@@ -108,11 +110,13 @@ func deferred_aura(particle,aura_scale,layer_bit):
 	var elemental = particle.instance()
 	self.add_child(elemental)
 	elemental.scale = aura_scale
-	if layer_bit != 0:
+	if layer_bit != 6:
 		elemental.set_lifetime(5)
 	self.set_collision_layer_bit(layer_bit,true)
 	self.set_collision_mask_bit(layer_bit,false)
 	self.set_collision_mask_bit(0,false)
+	if layer_bit == 5 :
+		$hitbox.scale = Vector2(5,5)
 	interaction(layer_bit)
 	no_forces = 1
 
@@ -131,6 +135,8 @@ func deferred_dash(char_pos,aoescale,fill_height,particle,central,layer_bit,flip
 	self.set_collision_layer_bit(layer_bit,true)
 	self.set_collision_mask_bit(layer_bit,false)
 	interaction(layer_bit)
+	if layer_bit == 6:
+		$hitbox.scale = Vector2(4,3)
 	if flipped and front_dash:
 		pos_modifier = 50
 	elif front_dash:
@@ -219,12 +225,34 @@ func deferred_melt(body):
 	get_node("CPUParticles2D").set_color_ramp(magma_grad)
 	set_collision_layer_bit(1,true)
 	set_collision_mask_bit(1,false)
-	set_collision_layer_bit(0,false)
+	set_collision_layer_bit(6,false)
+	set_collision_mask_bit(6,true)
 	set_collision_mask_bit(0,true)
 	if body.get("magma") == 0 :
 		body.queue_free()
 
 
+
+func wind_push(body):
+	if body.get_collision_layer_bit(6) and body.get("magma") == 0 and body.get_mode() == RigidBody2D.MODE_STATIC:
+		call_deferred("earth_bullet",body)
+	elif body.get_collision_layer_bit(19):
+		if aura_shape :
+			body.wind_float()
+		else :
+			body.wind_push()
+			call_deferred("wind_disable")
+	else :
+		yield(get_tree().create_timer(0.4),"timeout")
+		call_deferred("wind_disable")
+
+func wind_disable():
+	$hitbox.disabled = true
+
+func earth_bullet(body):
+	body.set_collision_mask_bit(0,true)
+	body.set_mode(RigidBody2D.MODE_CHARACTER)
+	body.set_weight(0.0001)
 
 
 func interaction(layer_bit):
@@ -246,7 +274,14 @@ func interaction(layer_bit):
 		set_max_contacts_reported(1)
 # warning-ignore:return_value_discarded
 		connect("body_entered",self,"check_contact")
-	elif layer_bit == 0:
+	elif layer_bit == 5:
+		set_collision_mask_bit(0,false)
+		set_collision_mask_bit(19,true)
+		set_contact_monitor(true)
+		set_max_contacts_reported(1)
+		connect("body_entered",self,"check_contact")
+	elif layer_bit == 6:
+		set_collision_mask_bit(0,false)
 		set_contact_monitor(true)
 		set_max_contacts_reported(1)
 		yield(get_tree().create_timer(0.5),"timeout")
@@ -266,6 +301,8 @@ func check_contact(body):
 		ignite(body)
 	elif get_collision_layer_bit(3) and electrified == false:
 		electrify(body)
+	elif get_collision_layer_bit(5) :
+		wind_push(body)
 
 func _integrate_forces(state):
 	if no_forces == 0 :

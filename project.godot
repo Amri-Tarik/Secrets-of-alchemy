@@ -97,9 +97,14 @@ ui_lightning={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":52,"unicode":0,"echo":false,"script":null)
  ]
 }
-ui_earth={
+ui_wind={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":53,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_earth={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":54,"unicode":0,"echo":false,"script":null)
  ]
 }
 ui_switch={
@@ -126,6 +131,7 @@ ui_burst={
 2d_physics/layer_4="water"
 2d_physics/layer_5="lightning"
 2d_physics/layer_6="wind"
+2d_physics/layer_7="earth"
 2d_physics/layer_20="hero"
 
 [rendering]
