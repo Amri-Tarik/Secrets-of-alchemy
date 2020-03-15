@@ -1,80 +1,196 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/hero.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/terrain/ground.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/terrain/stairs.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/terrain/big.png" type="Texture" id=2]
 [ext_resource path="res://GDScript/main.gd" type="Script" id=4]
 [ext_resource path="res://GDScript/element0.gd" type="Script" id=5]
 
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 68, 68, 0, 68, 0, 0, 68, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 464, 68, 0, 68, 0, 0, 464, 0 )
+
+[sub_resource type="TileSet" id=3]
+10/name = "big.png 10"
+10/texture = ExtResource( 2 )
+10/tex_offset = Vector2( 0, 0 )
+10/modulate = Color( 1, 1, 1, 1 )
+10/region = Rect2( 800, 192, 148, 276 )
+10/tile_mode = 0
+10/occluder_offset = Vector2( 0, 0 )
+10/navigation_offset = Vector2( 0, 0 )
+10/shape_offset = Vector2( 0, 0 )
+10/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+10/shape_one_way = false
+10/shape_one_way_margin = 0.0
+10/shapes = [  ]
+10/z_index = 1
+11/name = "big.png 11"
+11/texture = ExtResource( 2 )
+11/tex_offset = Vector2( 0, 0 )
+11/modulate = Color( 1, 1, 1, 1 )
+11/region = Rect2( 1120, 168, 148, 312 )
+11/tile_mode = 0
+11/occluder_offset = Vector2( 0, 0 )
+11/navigation_offset = Vector2( 0, 0 )
+11/shape_offset = Vector2( 0, 0 )
+11/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+11/shape_one_way = false
+11/shape_one_way_margin = 0.0
+11/shapes = [  ]
+11/z_index = 1
+12/name = "big.png 12"
+12/texture = ExtResource( 2 )
+12/tex_offset = Vector2( 0, 0 )
+12/modulate = Color( 1, 1, 1, 1 )
+12/region = Rect2( 960, 160, 160, 320 )
+12/tile_mode = 0
+12/occluder_offset = Vector2( 0, 0 )
+12/navigation_offset = Vector2( 0, 0 )
+12/shape_offset = Vector2( 0, 0 )
+12/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+12/shape_one_way = false
+12/shape_one_way_margin = 0.0
+12/shapes = [  ]
+12/z_index = 1
+13/name = "big.png 13"
+13/texture = ExtResource( 2 )
+13/tex_offset = Vector2( 0, 0 )
+13/modulate = Color( 1, 1, 1, 1 )
+13/region = Rect2( 1032, 32, 208, 128 )
+13/tile_mode = 0
+13/occluder_offset = Vector2( 0, 0 )
+13/navigation_offset = Vector2( 0, 0 )
+13/shape_offset = Vector2( 0, 0 )
+13/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+13/shape_one_way = false
+13/shape_one_way_margin = 0.0
+13/shapes = [  ]
+13/z_index = 1
+14/name = "big.png 14"
+14/texture = ExtResource( 2 )
+14/tex_offset = Vector2( 0, 0 )
+14/modulate = Color( 1, 1, 1, 1 )
+14/region = Rect2( 820, 540, 68, 68 )
+14/tile_mode = 0
+14/occluder_offset = Vector2( 0, 0 )
+14/navigation_offset = Vector2( 0, 0 )
+14/shape_offset = Vector2( 0, 0 )
+14/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+14/shape = SubResource( 1 )
+14/shape_one_way = false
+14/shape_one_way_margin = 1.0
+14/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+14/z_index = 2
+15/name = "big.png 15"
+15/texture = ExtResource( 2 )
+15/tex_offset = Vector2( 0, 0 )
+15/modulate = Color( 1, 1, 1, 1 )
+15/region = Rect2( 812, 540, 464, 68 )
+15/tile_mode = 0
+15/occluder_offset = Vector2( 0, 0 )
+15/navigation_offset = Vector2( 0, 0 )
+15/shape_offset = Vector2( 0, 0 )
+15/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+15/shape = SubResource( 2 )
+15/shape_one_way = false
+15/shape_one_way_margin = 1.0
+15/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 2 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+15/z_index = 2
+16/name = "big.png 16"
+16/texture = ExtResource( 2 )
+16/tex_offset = Vector2( 0, 0 )
+16/modulate = Color( 1, 1, 1, 1 )
+16/region = Rect2( 800, 640, 480, 148 )
+16/tile_mode = 0
+16/occluder_offset = Vector2( 0, 0 )
+16/navigation_offset = Vector2( 0, 0 )
+16/shape_offset = Vector2( 0, 0 )
+16/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+16/shape_one_way = false
+16/shape_one_way_margin = 0.0
+16/shapes = [  ]
+16/z_index = 0
+17/name = "big.png 17"
+17/texture = ExtResource( 2 )
+17/tex_offset = Vector2( 0, 0 )
+17/modulate = Color( 1, 1, 1, 1 )
+17/region = Rect2( 800, 788, 480, 172 )
+17/tile_mode = 0
+17/occluder_offset = Vector2( 0, 0 )
+17/navigation_offset = Vector2( 0, 0 )
+17/shape_offset = Vector2( 0, 0 )
+17/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+17/shape_one_way = false
+17/shape_one_way_margin = 0.0
+17/shapes = [  ]
+17/z_index = 0
+18/name = "big.png 18"
+18/texture = ExtResource( 2 )
+18/tex_offset = Vector2( 0, 0 )
+18/modulate = Color( 1, 1, 1, 1 )
+18/region = Rect2( 800, 1108, 480, 172 )
+18/tile_mode = 0
+18/occluder_offset = Vector2( 0, 0 )
+18/navigation_offset = Vector2( 0, 0 )
+18/shape_offset = Vector2( 0, 0 )
+18/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+18/shape_one_way = false
+18/shape_one_way_margin = 0.0
+18/shapes = [  ]
+18/z_index = 0
+19/name = "big.png 19"
+19/texture = ExtResource( 2 )
+19/tex_offset = Vector2( 0, 0 )
+19/modulate = Color( 1, 1, 1, 1 )
+19/region = Rect2( 800, 960, 480, 148 )
+19/tile_mode = 0
+19/occluder_offset = Vector2( 0, 0 )
+19/navigation_offset = Vector2( 0, 0 )
+19/shape_offset = Vector2( 0, 0 )
+19/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+19/shape_one_way = false
+19/shape_one_way_margin = 0.0
+19/shapes = [  ]
+19/z_index = 0
+
 [node name="main" type="Node2D"]
 script = ExtResource( 4 )
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2( 1, 0 )
+scale = Vector2( 0.4, 0.4 )
+tile_set = SubResource( 3 )
+cell_quadrant_size = 64
+cell_tile_origin = 1
+centered_textures = true
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 131090, 16, 0, 131095, 16, 0, 131101, 16, 0, 131107, 17, 0, 131110, 16, 0, 196626, 16, 0, 196627, 17, 0, 196641, 16, 0, 196646, 16, 0, 262166, 16, 0, 262170, 16, 0, 262171, 17, 0, 262176, 16, 0, 327696, 3, 0, 327698, 16, 0, 327717, 17, 0, 327718, 17, 0, 393234, 16, 0, 393238, 16, 0, 393242, 17, 0, 393250, 16, 0, 458778, 12, 0, 458783, 10, 0, 458790, 16, 0, 524306, 17, 0, 524313, 16, 0, 524320, 16, 0, 524323, 17, 0, 524326, 16, 0, 655378, 16, 0, 655385, 17, 0, 655392, 16, 0, 655398, 16, 0, 655399, 13, 0, 720913, 11, 0, 720929, 17, 0, 720932, 14, 0, 720933, 14, 0, 720934, 14, 0, 720935, 14, 0, 720936, 14, 0, 720937, 14, 0, 786450, 16, 0, 786457, 16, 0, 786464, 16, 0, 786468, 14, 0, 786469, 14, 0, 786470, 14, 0, 786471, 14, 0, 786472, 14, 0, 786473, 14, 0, 851986, 16, 0, 851988, 17, 0, 851992, 16, 0, 851994, 16, 0, 852000, 16, 0, 852003, 5, 0, 852004, 15, 0, 852005, 0, 0, 852006, 0, 0, 852007, 0, 0, 852008, 14, 0, 917522, 15, 0, 917529, 15, 0, 917536, 15, 0, 917537, 1, 0, 917541, 0, 0, 983053, 0, 0, 983054, 0, 0, 983055, 0, 0, 983056, 0, 0, 983057, 0, 0, 983058, 0, 0, 983059, 0, 0, 983060, 0, 0, 983061, 0, 0, 983062, 0, 0, 983063, 0, 0, 983067, 1, 0, 983074, 1, 0 )
 
 [node name="Hero" parent="." instance=ExtResource( 1 )]
 position = Vector2( 567.136, 281.044 )
 GRAVITY = 45
 JUMP_POWER = -900
 
-[node name="StaticBody2D3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 480.659, 480.149 )
-rotation = -0.139626
-scale = Vector2( 0.589, 1 )
-
-[node name="StaticBody2D4" parent="." instance=ExtResource( 2 )]
-position = Vector2( -36.1041, 263.299 )
-rotation = -1.58301
-
-[node name="StaticBody2D11" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1485.62, 254.748 )
-rotation = -1.58301
-
-[node name="StaticBody2D13" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1180.09, 282.496 )
-rotation = -1.58301
-scale = Vector2( 0.476, 1 )
-
-[node name="StaticBody2D12" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1323.81, 818.982 )
-rotation = -1.58301
-
-[node name="StaticBody2D14" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1489.98, 728.542 )
-rotation = -1.58301
-
-[node name="StaticBody2D2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 188.727, 571.167 )
-rotation = 0.651008
-
-[node name="StaticBody2D5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1012.13, 523.775 )
-rotation = 0.0698132
-scale = Vector2( 0.987, 1 )
-
-[node name="StaticBody2D6" parent="." instance=ExtResource( 2 )]
-position = Vector2( 695.184, 603.636 )
-scale = Vector2( 0.13, 1 )
-
-[node name="StaticBody2D7" parent="." instance=ExtResource( 2 )]
-position = Vector2( 886.506, 714.753 )
-scale = Vector2( 2.986, 1 )
-
-[node name="StaticBody2D9" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1230.35, 355.464 )
-scale = Vector2( 1.355, 1 )
-
-[node name="StaticBody2D10" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1363.97, 0.0577507 )
-scale = Vector2( 0.74, 1 )
-
-[node name="StaticBody2D8" parent="." instance=ExtResource( 2 )]
-position = Vector2( 180.777, 589.138 )
-rotation = 0.69115
-scale = Vector2( 0.946, 4.222 )
-
 [node name="element0" type="ColorRect" parent="."]
-margin_left = 95.7993
-margin_top = 619.521
-margin_right = 150.799
-margin_bottom = 674.521
+margin_left = 57.128
+margin_top = 773.372
+margin_right = 112.128
+margin_bottom = 828.372
 color = Color( 0.12549, 0.545098, 0.94902, 1 )
 script = ExtResource( 5 )
 __meta__ = {

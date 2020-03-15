@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/adventurer-punch-02.png-ee4dbc3e93b5ebc47b2f480f6e45085c.stex"
+path="res://.import/big.png-44219c28b25d7fc1f4ee18ca5eb1dac7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Individual Sprites/adventurer-punch-02.png"
-dest_files=[ "res://.import/adventurer-punch-02.png-ee4dbc3e93b5ebc47b2f480f6e45085c.stex" ]
+source_file="res://scenes/terrain/big.png"
+dest_files=[ "res://.import/big.png-44219c28b25d7fc1f4ee18ca5eb1dac7.stex" ]
 
 [params]
 
