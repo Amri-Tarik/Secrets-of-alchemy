@@ -64,7 +64,7 @@ func get_input():
 		i.aura = 1
 	
 func _process(_delta):
-	mouse_pos = get_viewport().get_mouse_position()
+	mouse_pos = get_global_mouse_position()
 	get_input()
 	if i.cast :
 		in_anim=1
