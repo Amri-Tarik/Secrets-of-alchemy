@@ -3,6 +3,8 @@ extends RigidBody2D
 var steam_grad = preload("res://scenes/particles/Ressources/steam.tres")
 var magma_grad = preload("res://scenes/particles/Ressources/magma.tres")
 var earth_grad = preload("res://scenes/particles/Ressources/earth.tres")
+var water_grad = preload("res://scenes/particles/Ressources/water_grad.tres")
+var ice_grad = preload("res://scenes/particles/Ressources/ice_grad.tres")
 var water_physics = preload("res://scenes/particles/Ressources/water.tres")
 var normal_physics = preload("res://scenes/particles/Ressources/friction_normal.tres")
 var lightning = preload("res://scenes/particles/lightning.tscn")
@@ -236,6 +238,9 @@ func deferred_melt(body):
 func wind_push(body):
 	if body.get_collision_layer_bit(6) and body.get("magma") == 0 and body.get_mode() == RigidBody2D.MODE_STATIC:
 		call_deferred("earth_bullet",body)
+	if body.get_collision_layer_bit(3) and body.get("frozen") == 0 :
+		body.call_deferred("freeze")
+		call_deferred("wind_disable")
 	elif body.get_collision_layer_bit(19):
 		if aura_shape :
 			body.wind_float()
@@ -249,10 +254,31 @@ func wind_push(body):
 func wind_disable():
 	$hitbox.disabled = true
 
+
+func freeze():
+	frozen = 1
+	set_mode(RigidBody2D.MODE_STATIC)
+	no_forces = 1
+	get_node("CPUParticles2D").set_color_ramp(ice_grad)
+	get_node("CPUParticles2D").initial_velocity=0
+
+
+func defreeze(body):
+	call_deferred("deferred_defreeze",body)
+
+func deferred_defreeze(body):
+	if body.get_collision_layer_bit(1) and frozen == 1 :
+		frozen = 0
+		set_mode(RigidBody2D.MODE_CHARACTER)
+		no_forces = 0
+		get_node("CPUParticles2D").set_color_ramp(water_grad)
+		get_node("CPUParticles2D").initial_velocity=7
+
 func earth_bullet(body):
 	body.set_collision_mask_bit(0,true)
 	body.set_mode(RigidBody2D.MODE_CHARACTER)
 	body.set_weight(0.0001)
+
 
 
 func interaction(layer_bit):
@@ -268,6 +294,8 @@ func interaction(layer_bit):
 		set_max_contacts_reported(1)
 # warning-ignore:return_value_discarded
 		connect("body_entered",self,"check_contact")
+# warning-ignore:return_value_discarded
+		get_node("CPUParticles2D/Area2D").connect("body_entered",self,"defreeze")
 	elif layer_bit == 4 :
 		mass = 0.1
 		set_contact_monitor(true)
