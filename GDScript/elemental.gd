@@ -258,6 +258,7 @@ func wind_disable():
 func freeze():
 	frozen = 1
 	set_mode(RigidBody2D.MODE_STATIC)
+	set_collision_mask_bit(19,true)
 	no_forces = 1
 	get_node("CPUParticles2D").set_color_ramp(ice_grad)
 	get_node("CPUParticles2D").initial_velocity=0
@@ -270,6 +271,7 @@ func deferred_defreeze(body):
 	if body.get_collision_layer_bit(1) and frozen == 1 :
 		frozen = 0
 		set_mode(RigidBody2D.MODE_CHARACTER)
+		set_collision_mask_bit(19,false)
 		no_forces = 0
 		get_node("CPUParticles2D").set_color_ramp(water_grad)
 		get_node("CPUParticles2D").initial_velocity=7
