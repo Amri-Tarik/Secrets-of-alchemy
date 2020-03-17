@@ -22,7 +22,6 @@ export var aoe_length = 10
 
 signal change_element
 signal aura
-signal trap_ready
 
 func _ready():
 	for _col in range(25):
@@ -142,7 +141,6 @@ func trap():
 	call_deferred("deferred_trap")
 
 func deferred_trap():
-	var TRAP_POS = earth_source
 	var trap_element = element[i]
 	var current_trap = trap_box.instance()
 	var particle = element[i].particle.instance()
@@ -152,11 +150,11 @@ func deferred_trap():
 	current_trap.global_position = earth_source + Vector2(0,-10)
 	current_trap.add_child(particle)
 	yield(get_tree().create_timer(0.5),"timeout")
-	emit_signal("trap_ready",trap_element)
+	current_trap.trap_ready(trap_element)
 
-func trigger(element,TRAP_POS):
+func trigger(trap_element,TRAP_POS):
 	for _k in range(25):
 		var elemental = atom.instance()
 		self.add_child(elemental)
 		elemental.connect("ignition",self,"ignite")
-		elemental.call_deferred("deferred_trap",element.burstscale,element.particle,element.centralburst,element.layer_bit,earth_source,TRAP_POS) 
+		elemental.call_deferred("deferred_trap",trap_element.burstscale,trap_element.particle,trap_element.centralburst,trap_element.layer_bit,TRAP_POS) 

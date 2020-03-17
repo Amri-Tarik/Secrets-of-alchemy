@@ -136,17 +136,17 @@ func deferred_dash(char_pos,aoescale,fill_height,particle,central,layer_bit,flip
 
 
 
-func deferred_trap(new_scale,particle,central,layer_bit,ground,trap_pos):
+func deferred_trap(new_scale,particle,central,layer_bit,trap_pos):
 	var elemental = particle.instance()
+	var pos_modifier = Vector2()
 	elemental.scale = new_scale
 	self.add_child(elemental)
 	self.set_collision_layer_bit(layer_bit,true)
 	self.set_collision_mask_bit(layer_bit,false)
 	interaction(layer_bit)
-#	if layer_bit == 2 :
-#		pos_modifier_x = rand_range(20,120)
-#		pos_modifier_y = rand_range(10,60)
-	translate(trap_pos)
+	if layer_bit == 2 :
+		pos_modifier = Vector2(0,rand_range(10,60))
+	translate(trap_pos - pos_modifier)
 	IMPULSE = Vector2(rand_range(3,-3),rand_range(-2,-5))
 	CENTRAL = central
 
@@ -314,6 +314,7 @@ func interaction(layer_bit):
 		set_collision_mask_bit(19,true)
 		set_contact_monitor(true)
 		set_max_contacts_reported(1)
+# warning-ignore:return_value_discarded
 		connect("body_entered",self,"check_contact")
 	elif layer_bit == 6:
 		set_collision_mask_bit(0,false)
