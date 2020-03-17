@@ -44,14 +44,9 @@ animations = [ {
 "name": "aura_cast",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 48 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 51 ) ],
+"frames": [ ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 43 ), ExtResource( 47 ) ],
 "loop": false,
-"name": "aoe_cast",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 1 ), ExtResource( 34 ), ExtResource( 36 ) ],
-"loop": false,
-"name": "dash_front",
+"name": "burst_cast",
 "speed": 8.0
 }, {
 "frames": [ ExtResource( 42 ), ExtResource( 41 ) ],
@@ -64,9 +59,14 @@ animations = [ {
 "name": "run",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 43 ), ExtResource( 47 ) ],
+"frames": [ ExtResource( 1 ), ExtResource( 34 ), ExtResource( 36 ) ],
 "loop": false,
-"name": "burst_cast",
+"name": "dash_front",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 48 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 51 ) ],
+"loop": false,
+"name": "aoe_cast",
 "speed": 8.0
 }, {
 "frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],

@@ -4,13 +4,14 @@ signal burst
 signal aoe
 signal aura
 signal dash
+signal trap
 
 
 export var SPEED = 200
 var screen_size
 var cast_pos = Vector2()
 var velocity = Vector2()
-var i = {"right" : 0, "left" : 0, "jump" : 0, "cast" : 0, "aoe" : 0,"aura" : 0, "dash" : 0}
+var i = {"right" : 0, "left" : 0, "jump" : 0, "cast" : 0, "aoe" : 0,"aura" : 0, "dash" : 0, "trap" : 0}
 export var GRAVITY = 10
 export var JUMP_POWER = -300
 export var MAX_SPEED = 400
@@ -65,6 +66,9 @@ func get_input():
 	if (Input.is_action_just_pressed("ui_aura"))  and aura_timer.get_time_left() == 0 and dash_timer.get_time_left() == 0:
 		aura_timer.start()
 		i.aura = 1
+	if (Input.is_action_pressed("ui_trap")) and cast_timer.get_time_left() == 0 and dash_timer.get_time_left() == 0:
+		cast_timer.start()
+		i.trap = 1
 	
 func _process(_delta):
 	SPEED = 200
@@ -93,6 +97,12 @@ func _process(_delta):
 		in_anim=1
 		i.aura = 0
 		emit_signal("aura")
+		$AnimatedSprite.play("aura_cast")
+		anim_finish()
+	if i.trap :
+		in_anim=1
+		i.trap = 0
+		emit_signal("trap")
 		$AnimatedSprite.play("aura_cast")
 		anim_finish()
 

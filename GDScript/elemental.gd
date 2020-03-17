@@ -46,13 +46,8 @@ func _ready():
 	self.queue_free()
 
 
-
-
-func burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit,ground,char_pos):
-	call_deferred("deferred_burst",mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit,ground,char_pos)
-
-func deferred_burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit,ground,char_pos):
-	if layer_bit == 6:
+func deferred_burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_bit,ground,char_pos,trap):
+	if layer_bit == 6 or trap:
 		pos_burst_l = Vector2(-50,10) + ground
 		pos_burst_r = Vector2(50,10) + ground 
 	else :
@@ -79,10 +74,6 @@ func deferred_burst(mouse,new_scale,particle,central,impulse,follow_mouse,layer_
 		IMPULSE = Vector2(rand_range(impulse[0],impulse[1]),rand_range(impulse[2],impulse[3]) + pos_burst_r.direction_to( mouse ).y*10*follow_mouse )
 		CENTRAL = central
 
-
-
-func aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,layer_bit):
-	call_deferred("deferred_aoe",mouse,new_scale,fill_height,particle,central,impulse,k,ground,layer_bit)
 
 func deferred_aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,layer_bit):
 	mouse_pos = mouse
@@ -123,11 +114,6 @@ func deferred_aura(particle,aura_scale,layer_bit):
 	no_forces = 1
 
 
-
-
-func dash(char_pos,aoescale,fill_height,particle,central,layer_bit,flipped,front_dash):
-	call_deferred("deferred_dash",char_pos,aoescale,fill_height,particle,central,layer_bit,flipped,front_dash)
-
 func deferred_dash(char_pos,aoescale,fill_height,particle,central,layer_bit,flipped,front_dash):
 	var pos_modifier = 0
 	var elemental = particle.instance()
@@ -145,6 +131,25 @@ func deferred_dash(char_pos,aoescale,fill_height,particle,central,layer_bit,flip
 		pos_modifier = -50
 	translate(Vector2(char_pos.x + pos_modifier , char_pos.y +30 -40*fill_height) )
 	CENTRAL = central
+
+
+
+
+
+func deferred_trap(new_scale,particle,central,layer_bit,ground,trap_pos):
+	var elemental = particle.instance()
+	elemental.scale = new_scale
+	self.add_child(elemental)
+	self.set_collision_layer_bit(layer_bit,true)
+	self.set_collision_mask_bit(layer_bit,false)
+	interaction(layer_bit)
+#	if layer_bit == 2 :
+#		pos_modifier_x = rand_range(20,120)
+#		pos_modifier_y = rand_range(10,60)
+	translate(trap_pos)
+	IMPULSE = Vector2(rand_range(3,-3),rand_range(-2,-5))
+	CENTRAL = central
+
 
 
 
