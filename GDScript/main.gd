@@ -2,6 +2,8 @@ extends Node2D
 
 const atom = preload("res://scenes/particles/elemental.tscn")
 const trap_box = preload("res://scenes/trap.tscn")
+const trap_script = preload("res://GDScript/trap.gd")
+const timed_trap_script = preload("res://GDScript/timed_trap.gd")
 
 var flame = { "particle" : preload("res://scenes/particles/spark.tscn"),"burstscale" : Vector2(1.5,1.5),"aoescale" : Vector2(2.5,2.5),"aurascale" : Vector2(2,2), "centralburst" : Vector2(-1.5,-5),"impulseburst" : [4,8,0,-2],"centralaoe" : Vector2(0,0),"impulseaoe" : [-1,1,0,0], "follow_mouse" : 1, "aoe_fill" : 2, "layer_bit" : 1 } 
 var gas = { "particle" : preload("res://scenes/particles/gas.tscn"),"burstscale" : Vector2(3,3), "aoescale" : Vector2(3,3),"aurascale" : Vector2(3,3), "centralburst" : Vector2(0,-0.5),"impulseburst" : [-0.5,0.5,-0.5,0.5],"centralaoe" : Vector2(0,-0.3),"impulseaoe" : [-0.8,0.8,0,-0.5], "follow_mouse" : 0, "aoe_fill" : 3, "layer_bit" : 2}
@@ -36,6 +38,8 @@ func _ready():
 	$Hero.connect("dash",self,"dash")
 # warning-ignore:return_value_discarded
 	$Hero.connect("trap",self,"trap")
+# warning-ignore:return_value_discarded
+	$Hero.connect("timed_trap",self,"timed_trap")
 
 
 func _process(_delta):
@@ -73,7 +77,7 @@ func _physics_process(_delta):
 				ground[col] = Vector2(0,0)
 			else :
 				ground[col] = temp_ground.position
-	if ( i == 5 and (Input.is_action_just_pressed("ui_burst")) ) or (Input.is_action_just_pressed("ui_trap")):
+	if ( i == 5 and (Input.is_action_just_pressed("ui_burst")) ) or (Input.is_action_just_pressed("ui_trap")) or (Input.is_action_just_pressed("ui_timed_trap")):
 		CHAR_POS = $Hero.transform.get_origin()
 		var space_state = get_world_2d().direct_space_state
 		earth_source = space_state.intersect_ray(CHAR_POS,Vector2(CHAR_POS.x, 4000),[],1).position
@@ -143,6 +147,23 @@ func trap():
 func deferred_trap():
 	var trap_element = element[i]
 	var current_trap = trap_box.instance()
+	current_trap.set_script(trap_script)
+	var particle = element[i].particle.instance()
+	add_child(current_trap)
+	particle.set_one_shot(false)
+	particle.scale = Vector2(2,2)
+	current_trap.global_position = earth_source + Vector2(0,-10)
+	current_trap.add_child(particle)
+	yield(get_tree().create_timer(0.5),"timeout")
+	current_trap.trap_ready(trap_element)
+
+func timed_trap():
+	call_deferred("deferred_timed_trap")
+
+func deferred_timed_trap():
+	var trap_element = element[i]
+	var current_trap = trap_box.instance()
+	current_trap.set_script(timed_trap_script)
 	var particle = element[i].particle.instance()
 	add_child(current_trap)
 	particle.set_one_shot(false)
