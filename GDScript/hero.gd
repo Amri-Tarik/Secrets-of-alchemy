@@ -75,7 +75,6 @@ func get_input():
 		i.timed_trap = 1
 	
 func _process(_delta):
-	SPEED = 200
 	mouse_pos = get_global_mouse_position()
 	get_input()
 	if i.cast :
