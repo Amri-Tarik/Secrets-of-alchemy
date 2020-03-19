@@ -8,6 +8,10 @@ export var MAX_SPEED = 400
 var jumping = 0
 var idling = 0
 var idle_timer
+var watch_timer
+var tracking = 0
+var target = Vector2()
+var Hero
 
 var i = {"right" : 0, "left" : 0, "jump" : 0}
 
@@ -17,9 +21,16 @@ func _ready():
 	idle_timer.set_one_shot(true)
 	add_child(idle_timer)
 	idle_timer.connect("timeout",self,"switch_idling")
+# warning-ignore:return_value_discarded
+	$vision.connect("track",self,"track")
+	watch_timer = Timer.new()
+	watch_timer.set_one_shot(true)
+	add_child(watch_timer)
+	watch_timer.set_wait_time(3)
+	watch_timer.connect("timeout",self,"tracking_off")
 
 func _process(_delta):
-	if idling == 0 :
+	if idling == 0 and tracking == 0:
 		i.right = 0
 		i.left = 0
 		idling = 1
@@ -33,23 +44,43 @@ func _process(_delta):
 	if  is_on_wall() :
 		idling = 0
 		$AnimatedSprite.flip_h = !$AnimatedSprite.flip_h
+	if tracking and watch_timer.get_time_left() in [0.5,1.0,1.5,2.0,2.5,3.0]:
+		$AnimatedSprite.flip_h = !$AnimatedSprite.flip_h
 
 func switch_idling():
 	idling = 0
+
+func track(CHAR_POS):
+	watch_timer.start()
+	target = CHAR_POS
+	tracking = 1
+	SPEED = 300
+
+func tracking_off():
+	$vision.tracking_off()
+	tracking = 0
+	idling = 0
+	SPEED = 150
 
 func _physics_process(_delta):
 	if i.jump :
 		velocity.y += JUMP_POWER
 		i.jump = 0
 		jumping = 1
-	if i.right :
+	if i.right or ( tracking and ( global_position.x + 50 ) < target.x ):
 		if (is_on_floor() == true) :
-			$AnimatedSprite.play("walk")
+			if tracking :
+				$AnimatedSprite.play("run")
+			else :
+				$AnimatedSprite.play("walk")
 		velocity.x = SPEED
 		$AnimatedSprite.flip_h = false
-	elif i.left :
+	elif i.left or ( tracking and ( global_position.x - 50 ) > target.x ) :
 		if (is_on_floor() == true) :
-			$AnimatedSprite.play("walk")
+			if tracking :
+				$AnimatedSprite.play("run")
+			else :
+				$AnimatedSprite.play("walk")
 		$AnimatedSprite.flip_h = true
 		velocity.x = -SPEED
 	else:
@@ -63,4 +94,6 @@ func _physics_process(_delta):
 	if velocity.y > 400 and is_on_floor() == false :
 		$AnimatedSprite.play("fall")
 		jumping = 0
+	if is_on_wall() and is_on_floor() and tracking :
+		velocity.y += JUMP_POWER
 	velocity = move_and_slide(velocity,Vector2(0,-1),true,2)

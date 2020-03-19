@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Individual Sprites/adventurer-run2-02.png" type="Texture" id=1]
 [ext_resource path="res://GDScript/enemy.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Individual Sprites/adventurer-walk-04.png" type="Texture" id=8]
 [ext_resource path="res://Individual Sprites/adventurer-walk-03.png" type="Texture" id=9]
 [ext_resource path="res://Individual Sprites/adventurer-walk-02.png" type="Texture" id=10]
+[ext_resource path="res://GDScript/vision.gd" type="Script" id=11]
 [ext_resource path="res://Individual Sprites/adventurer-run-01.png" type="Texture" id=25]
 [ext_resource path="res://Individual Sprites/adventurer-run-00.png" type="Texture" id=26]
 [ext_resource path="res://Individual Sprites/adventurer-run-02.png" type="Texture" id=27]
@@ -44,9 +45,34 @@ animations = [ {
 "name": "idle",
 "speed": 2.0
 }, {
+"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],
+"loop": false,
+"name": "jump",
+"speed": 8.0
+}, {
 "frames": [ ExtResource( 53 ), ExtResource( 55 ), ExtResource( 54 ) ],
 "loop": false,
 "name": "aura_cast",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 43 ), ExtResource( 47 ) ],
+"loop": false,
+"name": "burst_cast",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 26 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 30 ), ExtResource( 32 ), ExtResource( 33 ) ],
+"loop": true,
+"name": "run",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "walk",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 34 ), ExtResource( 36 ) ],
+"loop": false,
+"name": "dash_front",
 "speed": 8.0
 }, {
 "frames": [ ExtResource( 48 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 51 ) ],
@@ -58,35 +84,10 @@ animations = [ {
 "loop": true,
 "name": "fall",
 "speed": 8.0
-}, {
-"frames": [ ExtResource( 1 ), ExtResource( 34 ), ExtResource( 36 ) ],
-"loop": false,
-"name": "dash_front",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 26 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 30 ), ExtResource( 32 ), ExtResource( 33 ) ],
-"loop": true,
-"name": "run",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 43 ), ExtResource( 47 ) ],
-"loop": false,
-"name": "burst_cast",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "walk",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],
-"loop": false,
-"name": "jump",
-"speed": 8.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 244.096, 10 )
+extents = Vector2( 224.292, 62.7607 )
 
 [node name="Enemy" type="KinematicBody2D"]
 position = Vector2( 150.733, 88.197 )
@@ -104,17 +105,18 @@ polygon = PoolVector2Array( -2.73828, -16.7938, 2.19841, -16.7938, 5.20335, -14.
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
 animation = "walk"
-frame = 2
+frame = 1
 playing = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="vision" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 524288
+script = ExtResource( 11 )
 
-[node name="right_col" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 247.371, -17.1047 )
+[node name="right_col" type="CollisionShape2D" parent="vision"]
+position = Vector2( 233.747, -9.02496 )
 shape = SubResource( 2 )
 
-[node name="left_col" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( -245.607, -17.1047 )
+[node name="left_col" type="CollisionShape2D" parent="vision"]
+position = Vector2( -231.039, -9.02496 )
 shape = SubResource( 2 )

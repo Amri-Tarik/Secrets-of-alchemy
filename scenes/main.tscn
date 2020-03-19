@@ -7,7 +7,7 @@
 [ext_resource path="res://GDScript/element0.gd" type="Script" id=5]
 [ext_resource path="res://scenes/enemy.tscn" type="PackedScene" id=6]
 
-[sub_resource type="ConvexPolygonShape2D" id=4]
+[sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 68, 0, 68, 68, 0, 68 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
@@ -80,14 +80,14 @@ points = PoolVector2Array( 464, 68, 0, 68, 0, 0, 464, 0 )
 14/navigation_offset = Vector2( 0, 0 )
 14/shape_offset = Vector2( 0, 0 )
 14/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-14/shape = SubResource( 4 )
+14/shape = SubResource( 1 )
 14/shape_one_way = false
 14/shape_one_way_margin = 1.0
 14/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 4 ),
+"shape": SubResource( 1 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 14/z_index = 2
