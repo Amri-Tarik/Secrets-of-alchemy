@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="rpg_shit"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/testing.tscn"
 config/icon="res://icon.png"
 
 [display]
