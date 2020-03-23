@@ -3,7 +3,7 @@ extends TileMap
 
 func _ready():
 	randomize()
-	fill_rooms(Vector2(4,0),10,10,7)
+	fill_rooms(Vector2(4,0),10,10,20)
 
 func fill_rooms(start,height,width,room):
 	var drop
@@ -15,13 +15,14 @@ func fill_rooms(start,height,width,room):
 		drop = randi() % int(width - 4)
 	for w in range(width):
 		for h in range(height):
-			set_cell(start.x,start.y + h,14)
-			set_cell(start.x + width,start.y + h,14)
-			set_cell(start.x + w,start.y,14)
-			set_cell(start.x + w,start.y + height,14)
+			set_cell(start.x,start.y + h,62)
+			set_cell(start.x + width,start.y + h,62)
+			set_cell(start.x + w,start.y,62)
+			set_cell(start.x + w,start.y + height,58)
 			set_cell(start.x + w,start.y + h,-1)
 			set_cell(start.x + w,start.y + h,-1)
-	set_cell(start.x + width, start.y + height,14)
+	set_cell(start.x,start.y + height,62)
+	set_cell(start.x + width, start.y + height,62)
 	var next_height = int((randi() % 6) + 6)
 	var next_width = int((randi() % 6) + 10)
 	if opening == 1 :

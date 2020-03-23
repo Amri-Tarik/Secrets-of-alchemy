@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/big.png-44219c28b25d7fc1f4ee18ca5eb1dac7.stex"
+path="res://.import/dungeon_tiles.png-807267c6100d1eab41f95059241688f2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/terrain/big.png"
-dest_files=[ "res://.import/big.png-44219c28b25d7fc1f4ee18ca5eb1dac7.stex" ]
+source_file="res://scenes/terrain/dungeon_tiles.png"
+dest_files=[ "res://.import/dungeon_tiles.png-807267c6100d1eab41f95059241688f2.stex" ]
 
 [params]
 

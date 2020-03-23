@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/big.png-44219c28b25d7fc1f4ee18ca5eb1dac7.stex"
+path="res://.import/spriteeeeeeee-expor2t.png-adf391e49159d1913313c627a4a619e2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/terrain/big.png"
-dest_files=[ "res://.import/big.png-44219c28b25d7fc1f4ee18ca5eb1dac7.stex" ]
+source_file="res://scenes/terrain/spriteeeeeeee-expor2t.png"
+dest_files=[ "res://.import/spriteeeeeeee-expor2t.png-adf391e49159d1913313c627a4a619e2.stex" ]
 
 [params]
 

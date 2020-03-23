@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/big.png-44219c28b25d7fc1f4ee18ca5eb1dac7.stex"
+path="res://.import/dungeon_clutter.png-174293f7734e0f4fa1bcb9fa4d40c2c5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/terrain/big.png"
-dest_files=[ "res://.import/big.png-44219c28b25d7fc1f4ee18ca5eb1dac7.stex" ]
+source_file="res://scenes/terrain/dungeon_clutter.png"
+dest_files=[ "res://.import/dungeon_clutter.png-174293f7734e0f4fa1bcb9fa4d40c2c5.stex" ]
 
 [params]
 
