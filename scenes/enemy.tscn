@@ -45,34 +45,9 @@ animations = [ {
 "name": "idle",
 "speed": 2.0
 }, {
-"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],
-"loop": false,
-"name": "jump",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 53 ), ExtResource( 55 ), ExtResource( 54 ) ],
 "loop": false,
 "name": "aura_cast",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 43 ), ExtResource( 47 ) ],
-"loop": false,
-"name": "burst_cast",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 26 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 30 ), ExtResource( 32 ), ExtResource( 33 ) ],
-"loop": true,
-"name": "run",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "walk",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 1 ), ExtResource( 34 ), ExtResource( 36 ) ],
-"loop": false,
-"name": "dash_front",
 "speed": 8.0
 }, {
 "frames": [ ExtResource( 48 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 51 ) ],
@@ -80,9 +55,34 @@ animations = [ {
 "name": "aoe_cast",
 "speed": 8.0
 }, {
+"frames": [ ExtResource( 26 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 30 ), ExtResource( 32 ), ExtResource( 33 ) ],
+"loop": true,
+"name": "run",
+"speed": 8.0
+}, {
 "frames": [ ExtResource( 42 ), ExtResource( 41 ) ],
 "loop": true,
 "name": "fall",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 34 ), ExtResource( 36 ) ],
+"loop": false,
+"name": "dash_front",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 43 ), ExtResource( 47 ) ],
+"loop": false,
+"name": "burst_cast",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "walk",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],
+"loop": false,
+"name": "jump",
 "speed": 8.0
 } ]
 
@@ -90,11 +90,14 @@ animations = [ {
 extents = Vector2( 224.292, 62.7607 )
 
 [node name="Enemy" type="KinematicBody2D"]
-position = Vector2( 150.733, 88.197 )
 z_index = 2
 collision_layer = 262144
 collision_mask = 65
 script = ExtResource( 2 )
+SPEED = 80
+GRAVITY = 20
+JUMP_POWER = -400
+MAX_SPEED = 160
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( -2.12574, 15.775 )
@@ -105,7 +108,7 @@ polygon = PoolVector2Array( -2.73828, -16.7938, 2.19841, -16.7938, 5.20335, -14.
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
 animation = "walk"
-frame = 1
+frame = 3
 playing = true
 
 [node name="vision" type="Area2D" parent="."]

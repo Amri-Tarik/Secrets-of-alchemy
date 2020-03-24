@@ -2,6 +2,7 @@ extends TileMap
 
 #checks if cell should not be filled !
 const EMPTY = 64
+const enemy =  preload("res://scenes/enemy.tscn")
 
 const oneAbove = [20,21,22,23,28,29,57]
 const table = [30,31]
@@ -41,6 +42,8 @@ func fill_rooms(start,height,width,room):
 					clutter.append([start.x + w,start.y + 2,26 ])
 				chandelier = 1
 			set_cell(start.x + w,start.y + height,58)
+			if ground_clutter in [30,31]:
+				call_deferred("spawn_enemy",start,height,w)
 			if !(w in range(5)) and !(w in range(width-3,width+2)) :
 				if ground_clutter in range(10) :
 					var clutter_num = randi() % oneAbove.size()
@@ -135,3 +138,10 @@ func check_for_empty(pos,height,width):
 			if get_cell(pos[0] + j,pos[1] - i) == EMPTY :
 				return 0
 	return 1
+
+func spawn_enemy(start,height,w):
+	var someguy = enemy.instance()
+	someguy.scale = Vector2(0.65,0.65)
+	someguy.SPEED_MOD = randi() % 50
+	get_parent().add_child(someguy)
+	someguy.global_position = map_to_world(Vector2(start.x + w,start.y + height - 3))
