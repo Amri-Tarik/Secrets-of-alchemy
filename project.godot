@@ -169,6 +169,7 @@ ui_timed_trap={
 
 [rendering]
 
+quality/2d/gles2_use_nvidia_rect_flicker_workaround=true
 quality/filters/use_nearest_mipmap_filter=true
 quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"

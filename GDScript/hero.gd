@@ -164,8 +164,6 @@ func _physics_process(_delta):
 	if floating :
 		velocity.y += -20
 	velocity = move_and_slide(velocity,Vector2(0,-1),true,2)
-	position.x = clamp(position.x, 0, screen_size.x)
-	position.y = clamp(position.y, 0, screen_size.y)
 
 
 func wind_push():
