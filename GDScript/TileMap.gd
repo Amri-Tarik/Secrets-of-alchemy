@@ -20,6 +20,7 @@ func fill_rooms(start,height,width,room):
 	var clutter = []
 	var drop
 	var door
+	var chandelier = 0
 	var opening = randi() % 2
 #	var opening = 0
 #	var opening = 1
@@ -33,11 +34,12 @@ func fill_rooms(start,height,width,room):
 			set_cell(start.x,start.y + h,62)
 			set_cell(start.x + width,start.y + h,62)
 			set_cell(start.x + w,start.y,62)
-			if !(w in range(5)) and !(w in range(width-3,width+2)) and height > 10 and ground_clutter in [23,24] :
+			if chandelier != 1 and !(w in range(5)) and !(w in range(width-3,width+2)) and height > 10 and ground_clutter in [23,24] :
 				if height > 14 :
 					clutter.append([start.x + w,start.y + 3,27])
 				else :
 					clutter.append([start.x + w,start.y + 2,26 ])
+				chandelier = 1
 			set_cell(start.x + w,start.y + height,58)
 			if !(w in range(5)) and !(w in range(width-3,width+2)) :
 				if ground_clutter in range(10) :
