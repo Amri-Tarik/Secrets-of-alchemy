@@ -5,10 +5,10 @@ const EMPTY = 64
 
 const oneAbove = [20,21,22,23,28,29,57]
 const table = [30,31]
-#const twoAbove = [20,21,22,23,28,29,30,31,57]
-#const threeAbove = [20,21,22,23,28,29,30,31,57]
-#const hanging = [20,21,22,23,28,29,30,31,57]
-#const onRoof = [20,21,22,23,28,29,30,31,57]
+const twoAbove = 24
+const threeAbove = [25,36]
+const hanging = [32,33,34,35]
+const onRoof = [26,27]
 
 func _ready():
 	randomize()
@@ -21,36 +21,51 @@ func fill_rooms(start,height,width,room):
 	var drop
 	var door
 	var opening = randi() % 2
-	if opening == 1 :
+#	var opening = 0
+#	var opening = 1
+	if opening == 1 or opening == 2 :
 		door = randi() % int(height - 5)
-	if opening == 0 :
+	if opening == 0 or opening == 2 :
 		drop = randi() % int(width - 4)
 	for w in range(width):
 		for h in range(height):
-			var ground_clutter =  randi() % 100
+			var ground_clutter =  randi() % 500
 			set_cell(start.x,start.y + h,62)
 			set_cell(start.x + width,start.y + h,62)
 			set_cell(start.x + w,start.y,62)
+			if !(w in range(5)) and !(w in range(width-3,width+2)) and height > 10 and ground_clutter in [23,24] :
+				if height > 14 :
+					clutter.append([start.x + w,start.y + 3,27])
+				else :
+					clutter.append([start.x + w,start.y + 2,26 ])
 			set_cell(start.x + w,start.y + height,58)
 			if !(w in range(5)) and !(w in range(width-3,width+2)) :
-				if ground_clutter in range(3) :
-					ground_clutter = randi() % oneAbove.size()
-					clutter.append([start.x + w,start.y + height - 1,oneAbove[ground_clutter] ])
-				if ground_clutter == 4 :
-					ground_clutter = randi() % table.size()
-					clutter.append([start.x + w,start.y + height - 1,table[ground_clutter] ])
+				if ground_clutter in range(10) :
+					var clutter_num = randi() % oneAbove.size()
+					clutter.append([start.x + w,start.y + height - 1,oneAbove[clutter_num] ])
+				elif ground_clutter in range(10,14) :
+					var clutter_num = randi() % table.size()
+					clutter.append([start.x + w,start.y + height - 1,table[clutter_num] ])
+				elif ground_clutter in range(14,18) :
+					clutter.append([start.x + w,start.y + height - 2,twoAbove ])
+				elif ground_clutter in range(18,22) :
+					var clutter_num = randi() % threeAbove.size()
+					clutter.append([ start.x + w,start.y + height - 3,threeAbove[clutter_num] ])
+				elif ground_clutter in range(25,30) and height > 8 :
+					var clutter_num = randi() % hanging.size()
+					clutter.append([ start.x + w,start.y + height - 3 - (randi() % 4),hanging[clutter_num] ])
 			set_cell(start.x + w,start.y + h,-1)
 			set_cell(start.x + w,start.y + h,-1)
 	set_cell(start.x,start.y + height,62)
 	set_cell(start.x + width, start.y + height,62)
 	var next_height = int((randi() % 6) + 8)
 	var next_width = int((randi() % 30) + 10)
-	if opening == 1 :
+	if opening == 1 or opening == 2 :
 		for h in range(4) :
 			set_cell(start.x + width -2,start.y + height - h - 1 - door,EMPTY)
 			set_cell(start.x + width -1,start.y + height - h - 1 - door,EMPTY)
 			set_cell(start.x + width,start.y + height - h - 1 - door,EMPTY)
-	if opening == 0 :
+	if opening == 0 or opening == 2 :
 		for w in range (3) :
 			set_cell(start.x + drop + w + 1,start.y + height - 2,EMPTY)
 			set_cell(start.x + drop + w + 1,start.y + height - 1,EMPTY)
@@ -67,7 +82,22 @@ func fill_rooms(start,height,width,room):
 		elif (element[2] in oneAbove) and get_cell(element[0],element[1]) != EMPTY and !(get_cell(element[0],element[1]) in table):
 			set_cell(element[0],element[1],element[2])
 			set_cell(element[0],element[1]-1,EMPTY)
-	if opening == 1:
+		elif (element[2] == twoAbove) and check_for_empty(element,2,0) and !(get_cell(element[0],element[1]) in table):
+			set_cell(element[0],element[1],element[2])
+			set_cell(element[0],element[1]+1,EMPTY)
+		elif (element[2] in threeAbove) and check_for_empty(element,3,0) and !(get_cell(element[0],element[1]) in table):
+			set_cell(element[0],element[1],element[2])
+			set_cell(element[0],element[1]+1,EMPTY)
+			set_cell(element[0],element[1]+2,EMPTY)
+		elif (element[2] in onRoof):
+			set_cell(element[0],element[1],element[2])
+			set_cell(element[0],element[1]+1,EMPTY)
+			set_cell(element[0],element[1]+2,EMPTY)
+		elif (element[2] in hanging):
+			set_cell(element[0],element[1],element[2])
+			set_cell(element[0],element[1]+1,EMPTY)
+			set_cell(element[0],element[1]-1,EMPTY)
+	if opening == 1 or opening == 2 :
 		if room != 0 :
 			# second vect is to ensure the opening is inside, the second is to be above the first room
 			var next_offset = Vector2(width,0) + Vector2(1,randi() % int(height) ) + Vector2(0,-(randi() % int(next_height)))
@@ -81,7 +111,7 @@ func fill_rooms(start,height,width,room):
 				set_cell(start.x + width + 1,start.y + height - h - 1 - door,EMPTY)
 				set_cell(start.x + width + 2,start.y + height - h - 1 - door,EMPTY)
 				set_cell(start.x + width + 3,start.y + height - h - 1 - door,EMPTY)
-	if opening == 0:
+	if opening == 0 or opening == 2 :
 		if room != 0 :
 			var next_offset = Vector2(0,height) + Vector2(randi() % int(width),1 ) + Vector2(-(randi() % int(next_width)),0)
 			var next_start = start + next_offset
@@ -98,7 +128,7 @@ func fill_rooms(start,height,width,room):
 func check_for_empty(pos,height,width):
 	height += 1
 	width += 1
-	for i in range(height) :
+	for i in range(-height,height) :
 		for j in range(-width,width+1) :
 			if get_cell(pos[0] + j,pos[1] - i) == EMPTY :
 				return 0
