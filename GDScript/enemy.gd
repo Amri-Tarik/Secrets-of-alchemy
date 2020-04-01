@@ -64,7 +64,7 @@ func tracking_off():
 	idling = 0
 	SPEED = 80 + SPEED_MOD
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	if i.jump :
 		velocity.y += JUMP_POWER
 		i.jump = 0
@@ -89,7 +89,6 @@ func _physics_process(_delta):
 		velocity.x = 0
 		if (is_on_floor()) and (i.right == 0) and (i.left == 0) :
 			$AnimatedSprite.play("idle")
-	
 	velocity.y += GRAVITY 
 	if velocity.y < 400 and is_on_floor() == false :
 		$AnimatedSprite.play("jump")
@@ -99,3 +98,8 @@ func _physics_process(_delta):
 	if is_on_wall() and is_on_floor() and tracking :
 		velocity.y += JUMP_POWER
 	velocity = move_and_slide(velocity,Vector2(0,-1),true,2)
+
+func take_damage(damage):
+	$ColorRect.margin_right -= damage
+	if $ColorRect.margin_left > $ColorRect.margin_right :
+		queue_free()

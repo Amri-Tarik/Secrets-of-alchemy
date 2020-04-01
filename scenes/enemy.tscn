@@ -45,6 +45,11 @@ animations = [ {
 "name": "idle",
 "speed": 2.0
 }, {
+"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],
+"loop": false,
+"name": "jump",
+"speed": 8.0
+}, {
 "frames": [ ExtResource( 53 ), ExtResource( 55 ), ExtResource( 54 ) ],
 "loop": false,
 "name": "aura_cast",
@@ -60,9 +65,9 @@ animations = [ {
 "name": "run",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 42 ), ExtResource( 41 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ) ],
 "loop": true,
-"name": "fall",
+"name": "walk",
 "speed": 8.0
 }, {
 "frames": [ ExtResource( 1 ), ExtResource( 34 ), ExtResource( 36 ) ],
@@ -70,19 +75,14 @@ animations = [ {
 "name": "dash_front",
 "speed": 8.0
 }, {
+"frames": [ ExtResource( 42 ), ExtResource( 41 ) ],
+"loop": true,
+"name": "fall",
+"speed": 8.0
+}, {
 "frames": [ ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 43 ), ExtResource( 47 ) ],
 "loop": false,
 "name": "burst_cast",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "walk",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 37 ), ExtResource( 38 ) ],
-"loop": false,
-"name": "jump",
 "speed": 8.0
 } ]
 
@@ -108,7 +108,7 @@ polygon = PoolVector2Array( -2.73828, -16.7938, 2.19841, -16.7938, 5.20335, -14.
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
 animation = "walk"
-frame = 3
+frame = 4
 playing = true
 
 [node name="vision" type="Area2D" parent="."]
@@ -123,3 +123,23 @@ shape = SubResource( 2 )
 [node name="left_col" type="CollisionShape2D" parent="vision"]
 position = Vector2( -231.039, -9.02496 )
 shape = SubResource( 2 )
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = -53.0
+margin_top = -62.3698
+margin_right = 53.0
+margin_bottom = -47.3698
+color = Color( 0.298039, 0.298039, 0.298039, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -50.0
+margin_top = -60.0
+margin_right = 50.0
+margin_bottom = -50.0
+color = Color( 1, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

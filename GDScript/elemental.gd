@@ -17,7 +17,6 @@ var mouse_pos
 var pos_burst_r
 var pos_burst_l
 
-
 var aura_shape = 0
 var no_forces = 0
 var steam = 0
@@ -328,8 +327,14 @@ func interaction(layer_bit):
 		
 
 
+func damaging(body):
+	add_collision_exception_with(body)
+	body.take_damage(2)
+#	print("damaged !")
 
 func check_contact(body):
+	if !get_collision_layer_bit(6) and body.get_class() == "KinematicBody2D" :
+		call_deferred("damaging",body)
 	if get_collision_layer_bit(1) and steam == 0 :
 		put_out(body)
 		ignite(body)
