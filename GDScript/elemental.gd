@@ -10,7 +10,7 @@ var normal_physics = preload("res://scenes/particles/Ressources/friction_normal.
 var lightning = preload("res://scenes/particles/lightning.tscn")
 
 
-export var aoe_length = 10
+export var aoe_length = 6
 var CENTRAL = Vector2()
 var IMPULSE = Vector2()
 var mouse_pos
@@ -86,7 +86,7 @@ func deferred_aoe(mouse,new_scale,fill_height,particle,central,impulse,k,ground,
 	self.set_collision_layer_bit(layer_bit,true)
 	self.set_collision_mask_bit(layer_bit,false)
 	interaction(layer_bit)
-	translate(Vector2(mouse_pos.x + aoe_length*k - 12.5*aoe_length , ground[k].y -30 -40*fill_height) )
+	translate(Vector2(mouse_pos.x + aoe_length*k - 8*aoe_length , ground[k].y -10 -40*fill_height) )
 	CENTRAL = central
 	IMPULSE = Vector2( rand_range(impulse[0],impulse[1]), rand_range(impulse[2],impulse[3]) )
 	if layer_bit == 1:
@@ -147,7 +147,7 @@ func deferred_trap(new_scale,particle,central,layer_bit,trap_pos):
 	if layer_bit == 2 :
 		pos_modifier = Vector2(0,rand_range(10,60))
 	translate(trap_pos - pos_modifier)
-	IMPULSE = Vector2(rand_range(3,-3),rand_range(-2,-5))
+	IMPULSE = Vector2(rand_range(3,-3),rand_range(-1,-3))
 	CENTRAL = central
 
 
@@ -176,7 +176,7 @@ func deferred_burst_from_gas(particle,contact_pos):
 	self.set_collision_mask_bit(1,false)
 	interaction(1)
 	translate(contact_pos)
-	IMPULSE = Vector2( rand_range(-3,3), rand_range(-3,3) )
+	IMPULSE = Vector2( rand_range(-4,4), rand_range(-5,2) )
 	CENTRAL = Vector2(0,-5)
 
 

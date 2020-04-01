@@ -20,7 +20,7 @@ var ground = []
 var mouse_pos
 var CHAR_POS
 var temp_ground
-export var aoe_length = 10
+export var aoe_length = 1
 
 signal change_element
 signal aura
@@ -70,9 +70,9 @@ func _process(_delta):
 func _physics_process(_delta):
 	mouse_pos = get_global_mouse_position()
 	if (Input.is_action_just_pressed("ui_aoe")) :
-		for col in range(25) :
+		for col in range(16) :
 			var space_state = get_world_2d().direct_space_state
-			temp_ground = space_state.intersect_ray(Vector2(mouse_pos.x + aoe_length*col - 12.5*aoe_length,mouse_pos.y),Vector2(mouse_pos.x + aoe_length*col - 12.5*aoe_length, 1400),[$Hero],1)
+			temp_ground = space_state.intersect_ray(Vector2(mouse_pos.x + aoe_length*col - 8*aoe_length,mouse_pos.y),Vector2(mouse_pos.x + aoe_length*col - 8*aoe_length, 1400),[$Hero],1)
 			if !temp_ground.has("position"):
 				ground[col] = Vector2(0,0)
 			else :
@@ -80,7 +80,7 @@ func _physics_process(_delta):
 	if ( i == 5 and (Input.is_action_just_pressed("ui_burst")) ) or (Input.is_action_just_pressed("ui_trap")) or (Input.is_action_just_pressed("ui_timed_trap")):
 		CHAR_POS = $Hero.transform.get_origin()
 		var space_state = get_world_2d().direct_space_state
-		earth_source = space_state.intersect_ray(CHAR_POS,Vector2(CHAR_POS.x, 4000),[],1).position
+		earth_source = space_state.intersect_ray(CHAR_POS,Vector2(CHAR_POS.x, 999999),[],1).position
 
 
 func burst():
@@ -101,7 +101,7 @@ func aoe():
 	call_deferred("deferred_aoe")
 	
 func deferred_aoe():
-	for k in range(25):
+	for k in range(16):
 		for fill_height in range(element[i].aoe_fill):
 			var elemental = atom.instance()
 			self.add_child(elemental)

@@ -157,12 +157,12 @@ func _physics_process(_delta):
 		
 	if dash_timer.get_time_left() == 0 && boosted :
 		velocity.x = velocity.x * 2
-		velocity.y += -50
+		velocity.y += -30
 	elif boosted and dash_boosted:
 		velocity = velocity * 1.05
 		dash_boosted = 0
 	if floating :
-		velocity.y += -20
+		velocity.y += -15
 	velocity = move_and_slide(velocity,Vector2(0,-1),true,2)
 
 
@@ -178,7 +178,7 @@ func wind_float():
 	floating = 0
 	
 func dash():
-	velocity = global_position.direction_to(mouse_pos).normalized()*1200
+	velocity = global_position.direction_to(mouse_pos).normalized()*700
 	if (abs(velocity.x) > abs(velocity.y)):
 		front_dash = 1
 		yield(dash_timer,"timeout")
