@@ -170,7 +170,7 @@ func burst_from_gas(particle,contact_pos):
 
 func deferred_burst_from_gas(particle,contact_pos):
 	var elemental = particle.instance()
-	elemental.scale = Vector2(2,2)
+	elemental.scale = Vector2(1.5,1.5)
 	self.add_child(elemental)
 	self.set_collision_layer_bit(1,true)
 	self.set_collision_mask_bit(1,false)
@@ -215,7 +215,7 @@ func deferred_electrify(body):
 	set_collision_mask_bit(3,true)
 	$hitbox.scale = Vector2(10,3)
 	var particle = lightning.instance()
-	particle.scale = Vector2(1.5,1.5)
+	particle.scale = Vector2(0.8,0.8)
 	add_child(particle)
 
 
